@@ -4,7 +4,7 @@ import cart from "../cart.svg";
 
 class Navbar extends Component {
   render() {
-    const { categories, selectedCat, onCatSelect, currencies, selectedCur, onCurSelect } = this.props;
+    const { categories, selectedCat, onCatSelect, currencies } = this.props;
 
     return (
       <nav className="navbar">
@@ -16,14 +16,17 @@ class Navbar extends Component {
               }`}
               key={ind}
               onClick={() => onCatSelect(ind)}
+              disabled={ind === selectedCat}
             >
               {cat.name}
             </button>
           ))}
         </div>
+
         <div className="logo">
-          <img src={logo} />
+          <img src={logo} alt="Logo" />
         </div>
+
         <div className="controls">
           <select>
             {currencies.map((cur, ind) => (
@@ -32,7 +35,7 @@ class Navbar extends Component {
               </option>
             ))}
           </select> 
-          <img src={cart} />
+          <img src={cart} alt="Cart" />
         </div>
       </nav>
     );
@@ -40,22 +43,3 @@ class Navbar extends Component {
 }
 
 export default Navbar;
-
-<ul>
-  <li>All</li>
-  <li>Clothes</li>
-  <li>Tech</li>
-  <li>
-    <img src={logo} />
-  </li>
-  <li className="push-left">
-    <select>
-      <option selected>USD</option>
-      <option>EUR</option>
-      <option>JPY</option>
-    </select>
-  </li>
-  <li>
-    <img src={cart} />
-  </li>
-</ul>;
