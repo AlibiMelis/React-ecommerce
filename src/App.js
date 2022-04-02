@@ -6,24 +6,49 @@ import Navbar from "./components/Navbar";
 class App extends Component {
   constructor(props) {
     super(props);
+    this.categories = [{ name: "All" }, { name: "Clothes" }, { name: "Tech" }];
+    this.currencies = [
+      {
+        symbol: "$",
+        label: "USD",
+      },
+      {
+        symbol: "£",
+        label: "GBP",
+      },
+      {
+        symbol: "A$",
+        label: "AUD",
+      },
+      {
+        symbol: "¥",
+        label: "JPY",
+      },
+      {
+        symbol: "₽",
+        label: "RUB",
+      },
+    ];
     this.state = {
-      categories: [{ name: "All" }, { name: "Clothes" }, { name: "Tech" }],
-      selectedCatigory: 0,
+      selectedCategory: 0,
+      selectedCurrency: 0,
     };
   }
 
-  onSelect = (ind) => {
-    this.setState({ selectedCatigory: ind });
-  }
+  onCatSelect = (ind) => {
+    this.setState({ selectedCategory: ind });
+  };
 
   render() {
     return (
       <div className="App">
         <Router>
           <Navbar
-            categories={this.state.categories}
-            selected={this.state.selectedCatigory}
-            onSelect={this.onSelect}
+            categories={this.categories}
+            selectedCat={this.state.selectedCategory}
+            onCatSelect={this.onCatSelect}
+            currencies={this.currencies}
+            selectedCur={this.state.selectedCurrency}
           />
         </Router>
       </div>
