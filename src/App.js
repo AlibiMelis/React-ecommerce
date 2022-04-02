@@ -28,20 +28,23 @@ class App extends Component {
       .query({ query: CategoryListQuery })
       .then((result) => result.data);
 
-    const query = ProductListQuery(categories[0].name)
-    console.log(query)
-
     const { products } = await client
       .query({
-        query: query,
+        query: ProductListQuery(categories[0].name),
       })
-      .then((result) => result.data);
-    console.log('didmount ',products)
+      .then((result) => result.data.category);
+      
     this.setState({ currencies, categories, products });
   }
 
-  onCatSelect = (ind) => {
-    this.setState({ selectedCategory: ind });
+  onCatSelect = async (ind) => {
+    const { products } = await client
+      .query({
+        query: ProductListQuery(this.state.categories[ind].name),
+      })
+      .then((result) => result.data.category);
+
+    this.setState({ selectedCategory: ind, products });
   };
 
   render() {

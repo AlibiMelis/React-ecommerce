@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import './ProductList.css'
+import ProductCard from "./ProductCard";
+import "./ProductList.css";
 
 class ProductList extends Component {
   render() {
@@ -7,7 +8,9 @@ class ProductList extends Component {
     console.log(products);
     return (
       <main className="product-list-container">
-        
+        {products.map((product) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
       </main>
     );
   }

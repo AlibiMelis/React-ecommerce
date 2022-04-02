@@ -15,6 +15,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
   background-color: var(--color-bg);
+  margin-top: 50px;
 }
 
 code {
@@ -29,7 +30,7 @@ button {
 }
 
 main {
-  padding: 1rem 10vw;
+  padding: 1rem 5%;
   border: 2px solid black;
 }
 
