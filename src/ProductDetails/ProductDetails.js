@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { client } from "../App";
 import { ProductDetailsQuery } from "../lib/queries";
 import { withRouter } from "../lib/withRouter";
-import ReactMarkdown from "react-markdown";
 import "./ProductDetails.css";
 
 class ProductDetails extends Component {
@@ -12,7 +11,6 @@ class ProductDetails extends Component {
       product: null,
       image: "",
     };
-    this.setImage = this.setImage.bind(this);
   }
 
   componentDidMount() {
@@ -26,10 +24,6 @@ class ProductDetails extends Component {
     loadDetails(this.props.params.id);
   }
 
-  setImage(img) {
-    this.setState({ image: img });
-  }
-
   render() {
     const { product } = this.state;
     return (
@@ -41,7 +35,7 @@ class ProductDetails extends Component {
                 <div
                   className="product-gallery-image"
                   key={`image${ind}`}
-                  onClick={() => this.setImage(img)}
+                  onClick={() => this.setState({image: img})}
                 >
                   <img src={img} alt={product.name} />
                 </div>
@@ -51,16 +45,14 @@ class ProductDetails extends Component {
               <img src={this.state.image} />
             </div>
             <div className="product-details">
-              <div>{product.brand}</div>
-              <div>{product.name}</div>
-              <div>
-                Price: <br />
-                {`${product.prices[0].currency.symbol} ${product.prices[0].amount}`}
+              <div className="big-text semibold-text">{product.brand}</div>
+              <div className="big-text name">{product.name}</div>
+              <div className="bold-text uppercase">
+                <span className="price-label">Price:</span>
+                <div className="price">{`${product.prices[0].currency.symbol} ${product.prices[0].amount}`}</div>
               </div>
-              <button className="add-to-cart">add to cart</button>
-              <div>
-                <ReactMarkdown>{product.description}</ReactMarkdown>
-              </div>
+              <button className="add-to-cart uppercase">add to cart</button>
+              <div className="description" dangerouslySetInnerHTML={{__html: product.description}} />
             </div>
           </div>
         )}
