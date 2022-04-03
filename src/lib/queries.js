@@ -25,7 +25,37 @@ export const ProductListQuery = (productTitle) => gql`
           }
           amount
         }
+        brand
         gallery
+      }
+    }
+  }
+`;
+
+export const ProductDetailsQuery = (id) => gql`
+  {
+    product(id: "${id}") {
+      name
+      inStock
+      gallery
+      description
+      category
+      prices {
+        amount
+        currency {
+          symbol
+        }
+      }
+      brand
+      attributes {
+        id
+        name
+        type
+        items {
+          id
+          value
+          displayValue
+        }
       }
     }
   }
