@@ -1,0 +1,39 @@
+:root {
+  --gallery-width: 80px;
+}
+
+.product-container {
+  display: flex;
+  margin-right: var(--gallery-width)
+}
+
+.product-gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-gallery-image {
+  width: var(--gallery-width);
+  height: var(--gallery-width);
+  margin: 20px 0px;
+}
+
+.product-image {
+  flex: 2 1 0;
+  margin: 0px 40px;
+  border: 1px solid blue;
+}
+
+.product-details {
+  flex: 1 1 0;
+  margin: 0px 40px;
+  border: 1px solid red;
+}
+
+button.add-to-cart {
+  height: 52px;
+  width: 100%;
+  text-transform: uppercase;
+  color: white;
+  background: var(--color-primary);
+}

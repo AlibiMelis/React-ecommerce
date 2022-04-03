@@ -28,14 +28,16 @@ class Navbar extends Component {
         </div>
 
         <div className="controls">
-          <select>
-            {currencies.map((cur, ind) => (
-              <option key={cur.symbol}>
-                {`${cur.symbol} ${cur.label}`}
-              </option>
-            ))}
-          </select> 
-          <img src={cart} alt="Cart" />
+          <div>
+            <select>
+              {currencies.map((cur, ind) => (
+                <option key={cur.symbol}>{`${cur.symbol} ${cur.label}`}</option>
+              ))}
+            </select>
+          </div>
+          <div className="cart">
+            <img src={cart} alt="Cart" />
+          </div>
         </div>
       </nav>
     );
