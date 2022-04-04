@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import logo from "../a-logo.svg";
 import cart from "../cart.svg";
 
 class Navbar extends Component {
   render() {
-    const { categories, selectedCat, onCatSelect, currencies } = this.props;
+    const { categories, selectedCat, onCatSelect, currencies, selectedCur, onCurSelect } = this.props;
 
     return (
       <nav className="navbar">
@@ -24,14 +25,16 @@ class Navbar extends Component {
         </div>
 
         <div className="logo">
-          <img src={logo} alt="Logo" />
+          <Link to="/">
+            <img src={logo} alt="Logo" />
+          </Link>
         </div>
 
         <div className="controls">
           <div>
-            <select>
+            <select onChange={(e) => onCurSelect(e.target.value)}>
               {currencies.map((cur, ind) => (
-                <option key={cur.symbol}>{`${cur.symbol} ${cur.label}`}</option>
+                <option key={cur.symbol} value={cur.symbol}>{`${cur.symbol} ${cur.label}`}</option>
               ))}
             </select>
           </div>

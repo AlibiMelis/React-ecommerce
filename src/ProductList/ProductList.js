@@ -4,12 +4,12 @@ import "./ProductList.css";
 
 class ProductList extends Component {
   render() {
-    const { products } = this.props;
+    const { products, selectedCur } = this.props;
     console.log(products);
     return (
       <main className="product-list-container">
         {products.map((product) => (
-          <ProductCard product={product} key={product.id} />
+          <ProductCard product={product} key={product.id} selectedCur={selectedCur} />
         ))}
       </main>
     );

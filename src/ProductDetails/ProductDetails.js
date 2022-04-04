@@ -26,9 +26,12 @@ class ProductDetails extends Component {
 
   render() {
     const { product } = this.state;
+    const { selectedCur } = this.props;
+    
+    const price = product ? product.prices.find(p => p.currency.symbol === selectedCur) : { currency: { symbol: "$" }, amount: 144};
     return (
       <main>
-        {this.state.product && (
+        {product && (
           <div className="product-container">
             <div className="product-gallery">
               {product.gallery.map((img, ind) => (
@@ -49,7 +52,7 @@ class ProductDetails extends Component {
               <div className="big-text name">{product.name}</div>
               <div className="bold-text uppercase">
                 <span className="price-label">Price:</span>
-                <div className="price">{`${product.prices[0].currency.symbol} ${product.prices[0].amount}`}</div>
+                <div className="price">{`${price.currency.symbol} ${price.amount}`}</div>
               </div>
               <button className="add-to-cart uppercase">add to cart</button>
               <div className="description" dangerouslySetInnerHTML={{__html: product.description}} />

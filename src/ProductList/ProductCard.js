@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 class ProductCard extends Component {
   render() {
     const { id, name, gallery, prices, brand } = this.props.product;
+    const { selectedCur } = this.props;
+    
+    console.log(id);
+    const price = prices.find(p => p.currency.symbol === selectedCur);
+
     return (
       <div className="product-card-container">
         <Link to={`/products/${id}`} className="product-link">
@@ -14,8 +19,8 @@ class ProductCard extends Component {
             <div className="product-card-label">
               <div className="product-card-name">{`${brand} ${name}`}</div>
               <div className="product-card-price">
-                {prices[0].currency.symbol}
-                {prices[0].amount}
+                {price.currency.symbol}
+                {price.amount}
               </div>
             </div>
           </div>

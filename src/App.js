@@ -16,8 +16,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedCurrency: "$",
       selectedCategory: 0,
-      selectedCurrency: 0,
       categories: [],
       currencies: [],
       products: [],
@@ -36,7 +36,12 @@ class App extends Component {
         })
         .then((result) => result.data.category);
 
-      this.setState({ currencies, categories, products });
+      this.setState({
+        currencies,
+        categories,
+        products,
+        selectedCurrency: currencies[0].symbol,
+      });
     };
 
     loadData();
@@ -51,6 +56,9 @@ class App extends Component {
 
     this.setState({ selectedCategory: ind, products });
   };
+  onCurSelect = async (symbol) => {
+    this.setState({ selectedCurrency: symbol });
+  };
 
   render() {
     return (
@@ -62,14 +70,15 @@ class App extends Component {
             onCatSelect={this.onCatSelect}
             currencies={this.state.currencies}
             selectedCur={this.state.selectedCurrency}
+            onCurSelect={this.onCurSelect}
           />
 
           <Routes>
             <Route
               path="/"
-              element={<ProductList products={this.state.products} />}
+              element={<ProductList products={this.state.products} selectedCur={this.state.selectedCurrency}/>}
             />
-            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/products/:id" element={<ProductDetails selectedCur={this.state.selectedCurrency} />} />
           </Routes>
         </Router>
       </div>
