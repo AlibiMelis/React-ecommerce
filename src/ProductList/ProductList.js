@@ -8,7 +8,7 @@ class ProductList extends Component {
     console.log(products);
     return (
       <main className="product-list-container">
-        {products.map((product) => (
+        {products.length && products.map((product) => (
           <ProductCard product={product} key={product.id} selectedCur={selectedCur} />
         ))}
       </main>

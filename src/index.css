@@ -47,6 +47,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 99;
 }
 .navbar div {
   flex: 1 1 0;
@@ -55,11 +56,6 @@ img {
   width: 40px;
   height: 40px;
 }
-.navbar .cart {
-  width: 20px;
-  height: 20px;
-}
-
 
 .categories-container {
   list-style-type: none;
@@ -85,9 +81,13 @@ img {
   cursor: default;
 }
 
-.controls {
+.controls ul {
+  list-style-type: none;
   display: flex;
-  justify-content: flex-end;
+}
+.controls .cart {
+  width: 20px;
+  height: 20px;
 }
 
 .push-left {

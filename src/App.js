@@ -2,14 +2,20 @@ import "./App.css";
 import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { CategoryListQuery, ProductListQuery } from "./lib/queries";
 import ProductList from "./ProductList/ProductList";
 import ProductDetails from "./ProductDetails/ProductDetails";
+import { client } from "./lib/apolloClient";
+import { requestProducts } from "./redux/Products/actions";
+import { connect } from "react-redux";
 
-export const client = new ApolloClient({
-  uri: "http://localhost:4000/",
-  cache: new InMemoryCache(),
+const mapStateToProps = (state) => ({
+  isPending: state.requestProducts.isPending,
+  products: state.requestProducts.products,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onRequestProducts: (category) => dispatch(requestProducts(category)),
 });
 
 class App extends Component {
@@ -30,16 +36,11 @@ class App extends Component {
         .query({ query: CategoryListQuery })
         .then((result) => result.data);
 
-      const { products } = await client
-        .query({
-          query: ProductListQuery(categories[0].name),
-        })
-        .then((result) => result.data.category);
+      this.props.onRequestProducts(categories[0].name);
 
       this.setState({
         currencies,
         categories,
-        products,
         selectedCurrency: currencies[0].symbol,
       });
     };
@@ -48,13 +49,9 @@ class App extends Component {
   }
 
   onCatSelect = async (ind) => {
-    const { products } = await client
-      .query({
-        query: ProductListQuery(this.state.categories[ind].name),
-      })
-      .then((result) => result.data.category);
+    this.props.onRequestProducts(this.state.categories[ind].name);
 
-    this.setState({ selectedCategory: ind, products });
+    this.setState({ selectedCategory: ind });
   };
   onCurSelect = async (symbol) => {
     this.setState({ selectedCurrency: symbol });
@@ -76,9 +73,19 @@ class App extends Component {
           <Routes>
             <Route
               path="/"
-              element={<ProductList products={this.state.products} selectedCur={this.state.selectedCurrency}/>}
+              element={
+                <ProductList
+                  products={this.props.products}
+                  selectedCur={this.state.selectedCurrency}
+                />
+              }
             />
-            <Route path="/products/:id" element={<ProductDetails selectedCur={this.state.selectedCurrency} />} />
+            <Route
+              path="/products/:id"
+              element={
+                <ProductDetails selectedCur={this.state.selectedCurrency} />
+              }
+            />
           </Routes>
         </Router>
       </div>
@@ -86,4 +93,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

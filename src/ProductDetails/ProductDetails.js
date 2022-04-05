@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { client } from "../App";
+import { client } from "../lib/apolloClient";
 import { ProductDetailsQuery } from "../lib/queries";
 import { withRouter } from "../lib/withRouter";
 import "./ProductDetails.css";

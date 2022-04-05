@@ -12,9 +12,9 @@ export const CategoryListQuery = gql`
   }
 `;
 
-export const ProductListQuery = (productTitle) => gql`
+export const ProductListQuery = (categoryTitle) => gql`
   {
-    category(input: { title: "${productTitle}"}) {
+    category(input: { title: "${categoryTitle}"}) {
       products {
         id
         name

@@ -13,6 +13,7 @@
 .product-card-container {
   width: 386px;
   margin: 50px 20px;
+  position: relative;
 }
 
 .product-card {
@@ -24,7 +25,7 @@
 }
 .product-card:hover {
   box-shadow: 0px 4px 35px #A8ACB033; /* 19% opacity */
-  transition: box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .product-card-img {
@@ -41,4 +42,20 @@
 .product-card-name {
   font-weight: 200;
   margin-bottom: 6px;
+}
+
+.cart-in-card {
+  background: var(--color-primary);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  position: absolute;
+  top: 416px;
+  right: 32px;
+  transform: translateY(-50%);
+}
+.cart-in-card img {
+  margin: auto;
+  width: 24px;
+  height: 24px;
 }
