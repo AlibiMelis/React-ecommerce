@@ -1,4 +1,4 @@
-import { getProducts } from "../../lib/apolloClient";
+import { getProducts } from "../lib/apolloClient";
 import * as actionTypes from "./actionTypes";
 
 export const requestProducts = (category) => (dispatch) => {
@@ -15,4 +15,9 @@ export const requestProducts = (category) => (dispatch) => {
 export const setCurrency = (currency) => ({
   type: actionTypes.SET_CURRENCY,
   payload: currency,
+});
+
+export const addToCart = (item) => ({
+  type: actionTypes.ADD_TO_CART,
+  payload: item,
 });

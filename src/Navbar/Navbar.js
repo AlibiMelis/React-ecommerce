@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import logo from "../a-logo.svg";
-import cart from "../cart.svg";
-import { setCurrency } from "../redux/Products/actions";
+import { ReactComponent as LogoIcon } from "../a-logo.svg";
+import { setCurrency } from "../redux/actions";
 import { connect } from "react-redux";
+import DropdownCart from "../Cart/DropdownCart";
 
 const mapDispatchToProps = (dispatch) => ({
   onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
 });
+
 class Navbar extends Component {
   render() {
     const { categories, selectedCat, onCatSelect, currencies } = this.props;
@@ -31,12 +32,12 @@ class Navbar extends Component {
 
         <div className="logo">
           <Link to="/">
-            <img src={logo} alt="Logo" />
+            <LogoIcon />
           </Link>
         </div>
 
-        <div className="controls">
-          <ul>
+        <div >
+          <ul className="controls">
             <li className="push-left">
               <select
                 onChange={(e) => this.props.onCurrencyChange(e.target.value)}
@@ -50,7 +51,7 @@ class Navbar extends Component {
               </select>
             </li>
             <li>
-              <img src={cart} alt="Cart" className="cart"/>
+              <DropdownCart />
             </li>
           </ul>
         </div>

@@ -3,6 +3,17 @@ import { client } from "../lib/apolloClient";
 import { ProductDetailsQuery } from "../lib/queries";
 import { withRouter } from "../lib/withRouter";
 import "./ProductDetails.css";
+import { connect } from "react-redux";
+import { addToCart } from "../redux/actions";
+import { priceToString } from "../lib/utils";
+
+const mapStateToProps = (state) => ({
+  currency: state.changeCurrency.currency,
+});
+const mapDispatchToProps = (dispatch) => ({
+  onAddToCart: (product, attributes) =>
+    dispatch(addToCart({ product, attributes })),
+});
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -25,10 +36,10 @@ class ProductDetails extends Component {
   }
 
   render() {
+
     const { product } = this.state;
-    const { selectedCur } = this.props;
-    
-    const price = product ? product.prices.find(p => p.currency.symbol === selectedCur) : { currency: { symbol: "$" }, amount: 144};
+    const { currency } = this.props;
+
     return (
       <main>
         {product && (
@@ -38,7 +49,7 @@ class ProductDetails extends Component {
                 <div
                   className="product-gallery-image"
                   key={`image${ind}`}
-                  onClick={() => this.setState({image: img})}
+                  onClick={() => this.setState({ image: img })}
                 >
                   <img src={img} alt={product.name} />
                 </div>
@@ -52,10 +63,22 @@ class ProductDetails extends Component {
               <div className="big-text name">{product.name}</div>
               <div className="bold-text uppercase">
                 <span className="price-label">Price:</span>
-                <div className="price">{`${price.currency.symbol} ${price.amount}`}</div>
+                <div className="price">
+                  {priceToString(
+                    product.prices.find((p) => p.currency.symbol === currency)
+                  )}
+                </div>
               </div>
-              <button className="add-to-cart uppercase">add to cart</button>
-              <div className="description" dangerouslySetInnerHTML={{__html: product.description}} />
+              <button
+                className="add-to-cart uppercase"
+                onClick={() => this.props.onAddToCart(product)}
+              >
+                add to cart
+              </button>
+              <div
+                className="description"
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              />
             </div>
           </div>
         )}
@@ -64,4 +87,8 @@ class ProductDetails extends Component {
   }
 }
 
-export default withRouter(ProductDetails);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ProductDetails));

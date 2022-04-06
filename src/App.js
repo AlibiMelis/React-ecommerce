@@ -1,13 +1,14 @@
 import "./App.css";
 import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navbar from "./Navbar/Navbar";
 import { CategoryListQuery, ProductListQuery } from "./lib/queries";
 import ProductList from "./ProductList/ProductList";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import { client } from "./lib/apolloClient";
-import { requestProducts } from "./redux/Products/actions";
+import { requestProducts } from "./redux/actions";
 import { connect } from "react-redux";
+import { render } from "react-dom";
 
 const mapStateToProps = (state) => ({
   isPending: state.requestProducts.isPending,
@@ -22,11 +23,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCurrency: "$",
       selectedCategory: 0,
       categories: [],
       currencies: [],
-      products: [],
     };
   }
 
@@ -41,7 +40,6 @@ class App extends Component {
       this.setState({
         currencies,
         categories,
-        selectedCurrency: currencies[0].symbol,
       });
     };
 
@@ -53,10 +51,6 @@ class App extends Component {
 
     this.setState({ selectedCategory: ind });
   };
-  onCurSelect = async (symbol) => {
-    this.setState({ selectedCurrency: symbol });
-  };
-
   render() {
     return (
       <div className="App">
@@ -66,10 +60,7 @@ class App extends Component {
             selectedCat={this.state.selectedCategory}
             onCatSelect={this.onCatSelect}
             currencies={this.state.currencies}
-            selectedCur={this.state.selectedCurrency}
-            onCurSelect={this.onCurSelect}
           />
-
           <Routes>
             <Route
               path="/"

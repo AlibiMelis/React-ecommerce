@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import cart from "../white-cart.svg";
 import { connect } from "react-redux";
+import { priceToString } from "../lib/utils";
 
 const mapStateToProps = (state) => ({ currency: state.changeCurrency.currency });
 class ProductCard extends Component {
@@ -25,7 +26,7 @@ class ProductCard extends Component {
     return (
       <div
         className="product-card-container"
-        onMouseEnter={this.onMouseEnter}
+        onMouseOver={this.onMouseEnter}
         onMouseOut={this.onMouseOut}
       >
         <Link to={`/products/${id}`} className="product-link">
@@ -36,8 +37,7 @@ class ProductCard extends Component {
             <div className="product-card-label">
               <div className="product-card-name">{`${brand} ${name}`}</div>
               <div className="product-card-price">
-                {price.currency.symbol}
-                {price.amount}
+                {priceToString(price)}
               </div>
             </div>
           </div>

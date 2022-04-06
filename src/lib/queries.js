@@ -35,6 +35,7 @@ export const ProductListQuery = (categoryTitle) => gql`
 export const ProductDetailsQuery = (id) => gql`
   {
     product(id: "${id}") {
+      id
       name
       inStock
       gallery

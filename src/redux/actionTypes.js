@@ -1,5 +1,11 @@
+// Request Products
 export const REQUEST_PRODUCTS_PENDING = "REQUEST_PRODUCTS_PENDING";
 export const REQUEST_PRODUCTS_SUCCESS = "REQUEST_PRODUCTS_SUCCESS";
 export const REQUEST_PRODUCTS_FAILED = "REQUEST_PRODUCTS_FAILED";
 
+// Change Currency
 export const SET_CURRENCY = "SET_CURRENCY";
+
+// Manipulate Cart
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART";

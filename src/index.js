@@ -7,10 +7,10 @@ import reportWebVitals from "./reportWebVitals";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
-import { requestProducts, changeCurrency } from "./redux/Products/reducers";
+import { requestProducts, changeCurrency, changeCart } from "./redux/reducers";
 import { createLogger } from "redux-logger";
 
-const rootReducer = combineReducers({ requestProducts, changeCurrency });
+const rootReducer = combineReducers({ requestProducts, changeCurrency, changeCart });
 
 const store = createStore(
   rootReducer,

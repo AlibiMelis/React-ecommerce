@@ -4,6 +4,7 @@
   --color-text: #1d1f22;
   --color-primary: #5ece7b;
   --color-bg: #ffffff;
+  --nav-height: 80px;
 }
 
 html,
@@ -38,7 +39,7 @@ img {
 
 .navbar {
   --width: 90%;
-  height: 80px;
+  height: var(--nav-height);
   width: var(--width);
   margin-left: calc((100% - var(--width)) / 2);
   position: fixed;
@@ -49,7 +50,7 @@ img {
   justify-content: center;
   z-index: 99;
 }
-.navbar div {
+.navbar > div { /* TODO: fix the equal distribution of items in navbar */
   flex: 1 1 0;
 }
 .navbar .logo {
@@ -81,15 +82,49 @@ img {
   cursor: default;
 }
 
-.controls ul {
+.controls {
   list-style-type: none;
   display: flex;
-}
-.controls .cart {
-  width: 20px;
-  height: 20px;
 }
 
 .push-left {
   margin-left: auto;
+}
+
+.dropdown {
+  position: absolute;
+  top: var(--nav-height);
+  background: white;
+  width: 325px;
+  padding: 1rem;
+  transform: translateX(calc(-100% + 40px));
+  border: 1px solid red;
+}
+
+.dropdown-cart-item {
+  margin-top: 40px;
+  display: flex;
+  max-height: 120px;
+}
+
+.quantity-control {
+  width: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quantity-control button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--color-text);
+}
+
+.flex-2 {
+  flex-grow: 2;
+  flex-basis: 0;
+}
+.flex-3 {
+  flex-grow: 3;
+  flex-basis: 0;
 }

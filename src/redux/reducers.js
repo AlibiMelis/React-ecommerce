@@ -23,13 +23,27 @@ export const requestProducts = (state = initialProductsState, action = {}) => {
 };
 
 const initialCurrencyState = {
-  currency: "",
+  currency: "$",
 };
 
 export const changeCurrency = (state = initialCurrencyState, action = {}) => {
   switch (action.type) {
     case actionTypes.SET_CURRENCY:
       return { ...state, currency: action.payload };
+    default:
+      return state;
+  }
+};
+
+const initialCartState = {
+  items: [],
+};
+
+export const changeCart = (state = initialCartState, action = {}) => {
+  switch (action.type) {
+    case actionTypes.ADD_TO_CART:
+      // TODO: Need to check if inside the cart already
+      return { ...state, items: [...state.items, {...action.payload, qty: 1}] };
     default:
       return state;
   }
