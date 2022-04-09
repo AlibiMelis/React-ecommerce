@@ -25,7 +25,12 @@ export const addToCart = (item) => ({
   payload: item,
 });
 
-// export const incrementItemCount = (item) => ({
-//   type: actionTypes.INCREMENT_ITEM_COUNT,
-//   payload: 
-// });
+export const incrementItemCount = (item) => ({
+  type: actionTypes.INCREMENT_ITEM_COUNT,
+  payload: item,
+});
+
+export const decrementItemCount = (item) => ({
+  type: actionTypes.DECREMENT_ITEM_COUNT,
+  payload: item,
+});

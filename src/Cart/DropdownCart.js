@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { ReactComponent as CartIcon } from "../cart.svg";
 import { connect } from "react-redux";
-import { priceToString } from "../lib/utils";
+import DropdownCartItem from "./DropdownCartItem";
+import { decrementItemCount, incrementItemCount } from "../redux/actions";
+import { Link } from "react-router-dom";
+import "./Cart.css";
 
 const mapStateToProps = (state) => ({
   items: state.changeCart.items,
   currency: state.changeCurrency.currency,
+});
+const mapDispatchToProps = (dispatch) => ({
+  onIncrement: (item) => dispatch(incrementItemCount(item)),
+  onDecrement: (item) => dispatch(decrementItemCount(item)),
 });
 
 class DropdownCart extends Component {
@@ -25,8 +32,22 @@ class DropdownCart extends Component {
             <div>{`My bag. ${this.props.items.length} items.`}</div>
             <div className="flex">
               {this.props.items.map((item, ind) => (
-                <DropdownCartItem item={item} currency={this.props.currency} key={ind} />
+                <DropdownCartItem
+                  item={item}
+                  currency={this.props.currency}
+                  key={ind}
+                  inc={this.props.onIncrement}
+                  dec={this.props.onDecrement}
+                />
               ))}
+            </div>
+            <div className="total">
+              <div>Total:</div>
+              <div className="push-left">$100.00</div>
+            </div>
+            <div className="dropdown-buttons">
+              <Link to="/cart" className="link btn btn-secondary">View bag</Link>
+              <Link to="/cart" className="link btn btn-primary">Check out</Link>
             </div>
           </div>
         )}
@@ -35,28 +56,4 @@ class DropdownCart extends Component {
   }
 }
 
-class DropdownCartItem extends Component {
-  render() {
-    const { item, currency } = this.props;
-    const price = item.product.prices.find(p => p.currency.symbol === currency);
-    return (
-      <div className="dropdown-cart-item">
-        <div className="flex-3">
-          <div>{item.product.brand}</div>
-          <div>{item.product.name}</div>
-          <div>{priceToString(price)}</div>
-        </div>
-        <div className="quantity-control">
-          <button>+</button>
-          {item.qty}
-          <button>-</button>
-        </div>
-        <div className="flex-2">
-          <img src={item.product.gallery[0]} alt={item.product.name} />
-        </div>
-      </div>
-    );
-  }
-}
-
-export default connect(mapStateToProps)(DropdownCart);
+export default connect(mapStateToProps, mapDispatchToProps)(DropdownCart);

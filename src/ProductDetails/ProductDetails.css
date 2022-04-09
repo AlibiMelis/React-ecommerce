@@ -4,7 +4,6 @@
 
 .product-container {
   display: flex;
-  margin-right: var(--gallery-width)
 }
 
 .product-gallery {

@@ -37,7 +37,7 @@ class ProductDetails extends Component {
     const { currency } = this.props;
 
     return (
-      <main>
+      <main className="left-aligned">
         {product && (
           <div className="product-container">
             <div className="product-gallery">
