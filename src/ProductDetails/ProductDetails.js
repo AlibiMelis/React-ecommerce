@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { client } from "../lib/apolloClient";
-import { ProductDetailsQuery } from "../lib/queries";
-import { withRouter } from "../lib/withRouter";
+import { getProduct } from "../lib/apolloClient";
 import "./ProductDetails.css";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
@@ -26,13 +24,11 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const loadDetails = async (id) => {
-      const { product } = await client
-        .query({ query: ProductDetailsQuery(id) })
-        .then((result) => result.data);
+      const { product } = await getProduct(id);
       this.setState({ product, image: product.gallery[0] });
     };
 
-    loadDetails(this.props.params.id);
+    loadDetails(this.props.match.params.id);
   }
 
   render() {
@@ -56,7 +52,7 @@ class ProductDetails extends Component {
               ))}
             </div>
             <div className="product-image">
-              <img src={this.state.image} />
+              <img src={this.state.image} alt={product.name} />
             </div>
             <div className="product-details">
               <div className="big-text semibold-text">{product.brand}</div>
@@ -91,4 +87,4 @@ class ProductDetails extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ProductDetails));
+)(ProductDetails);

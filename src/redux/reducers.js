@@ -43,7 +43,22 @@ export const changeCart = (state = initialCartState, action = {}) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
       // TODO: Need to check if inside the cart already
-      return { ...state, items: [...state.items, {...action.payload, qty: 1}] };
+      const item = state.items.find(
+        (i) => i.product.id === action.payload.product.id
+      );
+      if (!item) {
+        return {
+          ...state,
+          items: [...state.items, { ...action.payload, qty: 1 }],
+        };
+      }
+      return {
+        ...state,
+        items: state.items.map((i) =>
+          i.product.id === item.product.id ? { ...i, qty: i.qty + 1 } : i
+        ),
+      };
+    
     default:
       return state;
   }

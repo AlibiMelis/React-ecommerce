@@ -52,7 +52,7 @@ class DropdownCartItem extends Component {
           <button>-</button>
         </div>
         <div className="flex-2">
-          <img src={item.product.gallery[0]} />
+          <img src={item.product.gallery[0]} alt={item.product.name} />
         </div>
       </div>
     );

@@ -4,29 +4,62 @@ import { ReactComponent as LogoIcon } from "../a-logo.svg";
 import { setCurrency } from "../redux/actions";
 import { connect } from "react-redux";
 import DropdownCart from "../Cart/DropdownCart";
+import { client } from "../lib/apolloClient";
+import { CategoryListQuery } from "../lib/queries";
 
 const mapDispatchToProps = (dispatch) => ({
   onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
 });
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: [],
+      currencies: [],
+    };
+  }
+
+  componentDidMount() {
+    const loadData = async () => {
+      const { currencies, categories } = await client
+        .query({ query: CategoryListQuery })
+        .then((result) => result.data);
+      this.setState({
+        currencies,
+        categories,
+      });
+    };
+
+    loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('updated');
+    if (this.props.location !== prevProps.location) {
+      const { category } = this.props.match.params;
+      console.log(category)
+    }
+  }
+
   render() {
-    const { categories, selectedCat, onCatSelect, currencies } = this.props;
+    const category = window.location.pathname.split("/")[1];
+    console.log(category);
+    const { categories, currencies } = this.state;
 
     return (
       <nav className="navbar">
         <div className="categories-container">
           {categories.map((cat, ind) => (
-            <button
-              className={`category-item ${
-                ind === selectedCat && "category-item-selected"
-              }`}
-              key={ind}
-              onClick={() => onCatSelect(ind)}
-              disabled={ind === selectedCat}
-            >
-              {cat.name}
-            </button>
+            <Link className="link" to={`/${cat.name}`} key={ind}>
+              <div
+                className={`category-item ${
+                  cat.name === category && "category-item-selected"
+                }`}
+              >
+                {cat.name}
+              </div>
+            </Link>
           ))}
         </div>
 
@@ -36,7 +69,7 @@ class Navbar extends Component {
           </Link>
         </div>
 
-        <div >
+        <div>
           <ul className="controls">
             <li className="push-left">
               <select

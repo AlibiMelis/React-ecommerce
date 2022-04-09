@@ -8,4 +8,6 @@ export const SET_CURRENCY = "SET_CURRENCY";
 
 // Manipulate Cart
 export const ADD_TO_CART = "ADD_TO_CART";
+export const INCREMENT_ITEM_COUNT = "INCREMENT_ITEM_COUNT";
+export const DECREMENT_ITEM_COUNT = "DECREMENT_ITEM_COUNT";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";

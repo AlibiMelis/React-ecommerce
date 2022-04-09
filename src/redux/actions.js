@@ -1,6 +1,7 @@
 import { getProducts } from "../lib/apolloClient";
 import * as actionTypes from "./actionTypes";
 
+// Request Products
 export const requestProducts = (category) => (dispatch) => {
   dispatch({ type: actionTypes.REQUEST_PRODUCTS_PENDING });
   getProducts(category)
@@ -12,12 +13,19 @@ export const requestProducts = (category) => (dispatch) => {
     );
 };
 
+// Change Currency
 export const setCurrency = (currency) => ({
   type: actionTypes.SET_CURRENCY,
   payload: currency,
 });
 
+// Manipulate Cart
 export const addToCart = (item) => ({
   type: actionTypes.ADD_TO_CART,
   payload: item,
 });
+
+// export const incrementItemCount = (item) => ({
+//   type: actionTypes.INCREMENT_ITEM_COUNT,
+//   payload: 
+// });
