@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Roboto&family=Roboto+Condensed:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Roboto&family=Roboto+Condensed:wght@700&display=swap");
 
 :root {
   --color-text: #1d1f22;
@@ -19,7 +19,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
   background-color: var(--color-bg);
-  margin-top: 50px;
+}
+body {
+  margin-top: var(--nav-height);
 }
 
 button {
@@ -29,10 +31,10 @@ button {
 }
 
 main {
-  padding: 4rem 5%;
+  padding: 2rem 5%;
 }
 main.left-aligned {
-  padding-right: calc(5% + var(--extra-right-margin)) 
+  padding-right: calc(5% + var(--extra-right-margin));
 }
 
 img {
@@ -51,6 +53,7 @@ img {
   text-align: left;
   text-transform: capitalize;
   font-size: 42px;
+  margin: 20px 0px;
 }
 
 .uppercase {
@@ -60,20 +63,26 @@ img {
   font-weight: bold;
 }
 
-.navbar {
-  --width: 90%;
+.navbar-container {
   height: var(--nav-height);
-  width: var(--width);
-  margin-left: calc((100% - var(--width)) / 2);
+  width: 100%;
   position: fixed;
   top: 0;
   background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 99;
 }
-.navbar > div { /* TODO: fix the equal distribution of items in navbar */
+
+.navbar {
+  --width: 90%;
+  height: 100%;
+  width: var(--width); /* TODO: seems not right should be padding */
+  margin-left: calc((100% - var(--width)) / 2);
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+.navbar > div {
+  /* TODO: fix the equal distribution of items in navbar */
   flex: 1 1 0;
 }
 .navbar .logo {
@@ -112,4 +121,3 @@ img {
 .push-left {
   margin-left: auto;
 }
-

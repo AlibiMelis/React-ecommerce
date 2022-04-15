@@ -40,12 +40,18 @@ const initialCartState = {
   items: [],
 };
 
+const compareItems = (a, b) => {
+  const sameProduct = a.product.id === b.product.id;
+  const sameAttr = lodash.isEqual(a.attributes, b.attributes);
+  return sameProduct && sameAttr;
+};
+
 export const changeCart = (state = initialCartState, action = {}) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
       // TODO: Need to check if inside the cart already
-      const itemToAdd = state.items.find(
-        (i) => i.product.id === action.payload.product.id
+      const itemToAdd = state.items.find((i) =>
+        compareItems(i, action.payload)
       );
       if (!itemToAdd) {
         return {
@@ -56,9 +62,10 @@ export const changeCart = (state = initialCartState, action = {}) => {
       return {
         ...state,
         items: state.items.map((i) =>
-          i.product.id === itemToAdd.product.id ? { ...i, qty: i.qty + 1 } : i
+          compareItems(i, action.payload) ? { ...i, qty: i.qty + 1 } : i
         ),
       };
+
     case actionTypes.INCREMENT_ITEM_COUNT:
       const itemToInc = state.items.find((i) =>
         lodash.isEqual(i, action.payload)
@@ -70,6 +77,7 @@ export const changeCart = (state = initialCartState, action = {}) => {
           lodash.isEqual(i, action.payload) ? { ...i, qty: i.qty + 1 } : i
         ),
       };
+
     case actionTypes.DECREMENT_ITEM_COUNT:
       const itemToDec = state.items.find((i) =>
         lodash.isEqual(i, action.payload)
@@ -82,6 +90,23 @@ export const changeCart = (state = initialCartState, action = {}) => {
           lodash.isEqual(i, action.payload) ? { ...i, qty: i.qty - 1 } : i
         ),
       };
+
+    case actionTypes.SET_ITEM_ATTRIBUTE:
+      const itemToSet = state.items.find((i) =>
+        lodash.isEqual(i, action.payload.item)
+      );
+      console.log(itemToSet)
+      if (!itemToSet) return state;
+      const attr = { ...itemToSet.attributes };
+      attr[action.payload.attr] = action.payload.value;
+      console.log(attr);
+      return {
+        ...state,
+        items: state.items.map((i) =>
+          lodash.isEqual(i, action.payload.item) ? { ...i, attributes: attr } : i
+        ),
+      };
+
     default:
       return state;
   }

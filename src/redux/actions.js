@@ -34,3 +34,8 @@ export const decrementItemCount = (item) => ({
   type: actionTypes.DECREMENT_ITEM_COUNT,
   payload: item,
 });
+
+export const setItemAttribute = (item, attr, value) => ({
+  type: actionTypes.SET_ITEM_ATTRIBUTE,
+  payload: { item, attr, value },
+})

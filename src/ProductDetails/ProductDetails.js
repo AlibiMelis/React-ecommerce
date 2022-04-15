@@ -4,13 +4,14 @@ import "./ProductDetails.css";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
 import { priceToString } from "../lib/utils";
+import ProductAttribute from "./ProductAttribute";
 
 const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
 });
 const mapDispatchToProps = (dispatch) => ({
   onAddToCart: (product, attributes) =>
-    dispatch(addToCart({ product, attributes })),
+    dispatch(addToCart({ product, attributes: { ...attributes } })),
 });
 
 class ProductDetails extends Component {
@@ -19,6 +20,7 @@ class ProductDetails extends Component {
     this.state = {
       product: null,
       image: "",
+      attributes: {},
     };
   }
 
@@ -31,9 +33,15 @@ class ProductDetails extends Component {
     loadDetails(this.props.match.params.id);
   }
 
-  render() {
+  onSetAttr = (attr, value) => {
+    const attributes = { ...this.state.attributes };
+    attributes[attr] = value;
+    this.setState({ attributes });
+  };
 
-    const { product } = this.state;
+  render() {
+    console.log("Rendeing", this.state.attributes);
+    const { product, attributes } = this.state;
     const { currency } = this.props;
 
     return (
@@ -57,6 +65,16 @@ class ProductDetails extends Component {
             <div className="product-details">
               <div className="big-text semibold-text">{product.brand}</div>
               <div className="big-text name">{product.name}</div>
+              <div>
+                {product.attributes.map((attribute) => (
+                  <ProductAttribute
+                    attr={attribute}
+                    onSetAttr={this.onSetAttr}
+                    selected={this.state.attributes[attribute.id]}
+                    key={attribute.id}
+                  />
+                ))}
+              </div>
               <div className="bold-text uppercase">
                 <span className="price-label">Price:</span>
                 <div className="price">
@@ -65,12 +83,18 @@ class ProductDetails extends Component {
                   )}
                 </div>
               </div>
-              <button
-                className="add-to-cart uppercase"
-                onClick={() => this.props.onAddToCart(product)}
-              >
-                add to cart
-              </button>
+              {product.inStock ? (
+                <div
+                  className="add-to-cart uppercase active"
+                  onClick={() => this.props.onAddToCart(product, attributes)}
+                >
+                  add to cart
+                </div>
+              ) : (
+                <div className="add-to-cart uppercase inactive">
+                  sorry, out of stock
+                </div>
+              )}
               <div
                 className="description"
                 dangerouslySetInnerHTML={{ __html: product.description }}
@@ -83,8 +107,4 @@ class ProductDetails extends Component {
   }
 }
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

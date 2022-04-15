@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { decrementItemCount, incrementItemCount } from "../redux/actions";
+import { decrementItemCount, incrementItemCount, setItemAttribute } from "../redux/actions";
 import CartItem from "./CartItem";
 
 const mapStateToProps = (state) => ({
@@ -10,18 +10,19 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onIncrement: (item) => dispatch(incrementItemCount(item)),
   onDecrement: (item) => dispatch(decrementItemCount(item)),
+  onSetAttr: (item, attr, value) => dispatch(setItemAttribute(item, attr, value))
 });
 
 class Cart extends Component {
   render() {
-    const { items } = this.props;
+    const { items, currency, onIncrement, onDecrement, onSetAttr } = this.props;
 
     return (
       <main className="left-aligned">
         <div className="header uppercase bold">Cart</div>
         <div className="cart-container">
           {items.map((item, ind) => (
-            <CartItem item={item} currency={this.props.currency} inc={this.props.onIncrement} dec={this.props.onDecrement} key={ind}/>
+            <CartItem item={item} onSetAttr={onSetAttr} currency={currency} inc={onIncrement} dec={onDecrement} key={ind}/>
           ))}
         </div>
       </main>

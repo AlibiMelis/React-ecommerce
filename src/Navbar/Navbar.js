@@ -35,58 +35,60 @@ class Navbar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('updated');
     if (this.props.location !== prevProps.location) {
       const { category } = this.props.match.params;
-      console.log(category)
+      console.log(category);
     }
   }
 
   render() {
     const category = window.location.pathname.split("/")[1];
-    console.log(category);
+    // console.log(category);
     const { categories, currencies } = this.state;
 
     return (
-      <nav className="navbar">
-        <div className="categories-container">
-          {categories.map((cat, ind) => (
-            <Link className="link" to={`/${cat.name}`} key={ind}>
-              <div
-                className={`category-item ${
-                  cat.name === category && "category-item-selected"
-                }`}
-              >
-                {cat.name}
-              </div>
+      <nav className="navbar-container">
+        <div className="navbar">
+          <div className="categories-container">
+            {categories.map((cat, ind) => (
+              <Link className="link" to={`/${cat.name}`} key={ind}>
+                <div
+                  className={`category-item ${
+                    cat.name === category && "category-item-selected"
+                  }`}
+                >
+                  {cat.name}
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="logo">
+            <Link to="/">
+              <LogoIcon />
             </Link>
-          ))}
-        </div>
+          </div>
 
-        <div className="logo">
-          <Link to="/">
-            <LogoIcon />
-          </Link>
-        </div>
-
-        <div>
-          <ul className="controls">
-            <li className="push-left">
-              <select
-                onChange={(e) => this.props.onCurrencyChange(e.target.value)}
-              >
-                {currencies.map((cur, ind) => (
-                  <option
-                    key={cur.symbol}
-                    value={cur.symbol}
-                  >{`${cur.symbol} ${cur.label}`}</option>
-                ))}
-              </select>
-            </li>
-            <li>
-              <DropdownCart />
-            </li>
-          </ul>
+          <div>
+            <ul className="controls">
+              <li className="push-left">
+                <select
+                  onChange={(e) => this.props.onCurrencyChange(e.target.value)}
+                  
+                >
+                  {currencies.map((cur, ind) => (
+                    <option
+                      key={cur.symbol}
+                      value={cur.symbol}
+                    >{`${cur.symbol} ${cur.label}`}</option>
+                  ))}
+                </select>
+              </li>
+              <li>
+                <DropdownCart />
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     );

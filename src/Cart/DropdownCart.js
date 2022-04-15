@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { ReactComponent as CartIcon } from "../cart.svg";
 import { connect } from "react-redux";
 import DropdownCartItem from "./DropdownCartItem";
@@ -18,36 +18,67 @@ const mapDispatchToProps = (dispatch) => ({
 class DropdownCart extends Component {
   constructor(props) {
     super(props);
+    this.minicartRef = createRef();
     this.state = { open: false };
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.onOutsideClick);
+  }
+
+  onMinicartClick = () => {
+    if (!this.state.open) {
+      document.addEventListener("mousedown", this.onOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", this.onOutsideClick);
+    }
+    this.setState({ open: !this.state.open });
+  };
+
+  onOutsideClick = (event) => {
+    console.log("click");
+    if (!this.minicartRef.current?.contains(event.target)) {
+      this.setState({ open: false });
+      document.removeEventListener("mousedown", this.onOutsideClick);
+    }
+  };
+
   render() {
+    const { items, currency, onIncrement, onDecrement } = this.props;
+    const total = items.reduce((acc, item) => {
+      return acc + item.product.prices.find(p => p.currency.symbol === currency).amount * item.qty
+    }, 0).toFixed(2);
     return (
-      <div>
-        <button onClick={() => this.setState({ open: !this.state.open })}>
-          <CartIcon />{" "}
+      <div className="minicart-container" ref={this.minicartRef}>
+        <div className="cart-counter">{items.length}</div>
+        <button onClick={this.onMinicartClick}>
+          <CartIcon />
         </button>
         {this.state.open && (
           <div className="dropdown">
-            <div>{`My bag. ${this.props.items.length} items.`}</div>
+            <div>{`My bag. ${items.length} items.`}</div>
             <div className="flex">
               {this.props.items.map((item, ind) => (
                 <DropdownCartItem
                   item={item}
-                  currency={this.props.currency}
+                  currency={currency}
                   key={ind}
-                  inc={this.props.onIncrement}
-                  dec={this.props.onDecrement}
+                  inc={onIncrement}
+                  dec={onDecrement}
                 />
               ))}
             </div>
             <div className="total">
               <div>Total:</div>
-              <div className="push-left">$100.00</div>
+              <div className="push-left">{`${currency}${total}`}</div>
             </div>
             <div className="dropdown-buttons">
-              <Link to="/cart" className="link btn btn-secondary">View bag</Link>
-              <Link to="/cart" className="link btn btn-primary">Check out</Link>
+              <Link to="/cart" className="link btn btn-secondary" onClick={() => {this.setState({open: false})}}>
+                View bag
+              </Link>
+              <Link to="/cart" className="link btn btn-primary" onClick={() => {this.setState({open: false})}}>
+                Check out
+              </Link>
             </div>
           </div>
         )}

@@ -27,28 +27,33 @@ class ProductCard extends Component {
   };
   handleAddToCart = async (id) => {
     const { product } = await getProduct(id);
-    this.props.onAddToCart(product); //TODO: add default attributes
+    const attributes = product.attributes.reduce((acc, attr) => {
+      acc[attr.id] = attr.items[0].id;
+      return acc;
+    }, {})
+    this.props.onAddToCart(product, attributes); //TODO: add default attributes
   };
 
   render() {
     const category = window.location.pathname.split("/")[1];
-    const { id, name, gallery, prices, brand } = this.props.product;
+    const { id, name, gallery, prices, brand, inStock } = this.props.product;
 
     const price = prices.find((p) => p.currency.symbol === this.props.currency);
 
     return (
       <div
-        className="product-card-container"
+        className={`product-card-container ${inStock ? "active-card" : "darken-card"}`}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
       >
         <button
           className="cart-in-card"
-          hidden={!this.state.isHovered}
+          hidden={!this.state.isHovered || !inStock}
           onClick={() => this.handleAddToCart(id)}
         >
           <img src={cart} alt="Add to cart" />
         </button>
+        <div hidden={inStock} className="absolute-label">out of stock</div>
         <Link to={`/${category}/${id}`} className="link product-link">
           <div className="product-card">
             <div className="product-card-img">

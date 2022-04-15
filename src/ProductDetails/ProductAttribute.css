@@ -1,0 +1,29 @@
+.attribute-options {
+  display: flex;
+}
+
+.attribute-option {
+  margin: 0px 6px;
+  width: 63px;
+  height: 45px;
+  border: 1px solid var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.attribute-option:hover {
+  transform: translateY(-2px);
+}
+
+.text-selected {
+  color: white;
+  background: var(--color-text);
+}
+
+.color-selected {
+  /* border: 1px solid white; */
+}

@@ -64,11 +64,25 @@
   text-transform: uppercase;
 }
 
-button.add-to-cart {
+.add-to-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 18px;
   height: 52px;
   width: 100%;
-  color: white;
-  background: var(--color-primary);
   margin: 20px 0 30px;
+}
+.active {
+  background: var(--color-primary);
+  color: white;
+}
+.active:hover {
+  filter: brightness(90%)
+}
+
+.inactive {
+  background: var(--color-text);
+  color: white;
+  filter: opacity(0.5);
 }
