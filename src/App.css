@@ -1,7 +1,128 @@
-.App {
-  text-align: center;
+:root {
+  --color-text: #1d1f22;
+  --color-primary: #5ece7b;
+  --color-bg: #ffffff;
+  --nav-height: 80px;
+  --extra-right-margin: 80px;
 }
 
+.App {
+  text-align: center;
+  color: var(--color-text);
+  height: 100%;
+}
+
+.disabled {
+  filter: brightness(0.3);
+  pointer-events: none;
+}
+
+.main {
+  margin-top: var(--nav-height);
+  background: white;
+  height: 100%;
+}
+
+button {
+  border: none;
+  background-color: var(--color-bg);
+  cursor: pointer;
+}
+
+main {
+  padding: 2rem 5%;
+}
+main.left-aligned {
+  padding-right: calc(5% + var(--extra-right-margin));
+}
+
+img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.link {
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.header {
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 42px;
+  margin: 20px 0px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.bold {
+  font-weight: bold;
+}
+
+.navbar-container {
+  height: var(--nav-height);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background: white;
+  z-index: 99;
+}
+
+.navbar {
+  --width: 90%;
+  height: 100%;
+  width: var(--width); /* TODO: seems not right should be padding */
+  margin-left: calc((100% - var(--width)) / 2);
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+.navbar > div {
+  /* TODO: fix the equal distribution of items in navbar */
+  flex: 1 1 0;
+}
+.navbar .logo {
+  width: 40px;
+  height: 40px;
+}
+
+
+
+.categories-container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.category-item {
+  height: 100%;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  font-size: 16px;
+}
+.category-item-selected {
+  color: var(--color-primary);
+  font-weight: 600;
+  border-bottom: var(--color-primary) 2px solid;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.push-left {
+  margin-left: auto;
+}
+
+/*
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +156,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

@@ -20,6 +20,7 @@
 .active-card:hover {
   box-shadow: 0px 4px 35px #A8ACB033; /* 19% opacity */
   transition: box-shadow 0.2s ease-in-out;
+  color: var(--color-text)
 }
 .darken-card {
   filter: opacity(0.5)

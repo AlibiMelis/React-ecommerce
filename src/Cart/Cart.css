@@ -1,15 +1,16 @@
-.minicart-container {
+.minicart-icon {
   position: relative;
+  padding: 0 5px;
+  cursor: pointer;
 }
 
 .dropdown {
   position: absolute;
   top: var(--nav-height);
+  right: 5%;
   background: white;
   width: 325px;
   padding: 1rem;
-  transform: translateX(calc(-100% + 40px));
-  border: 1px solid red;
 }
 
 .cart-counter {

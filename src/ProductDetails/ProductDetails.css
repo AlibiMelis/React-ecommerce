@@ -72,6 +72,7 @@
   height: 52px;
   width: 100%;
   margin: 20px 0 30px;
+  cursor: pointer;
 }
 .active {
   background: var(--color-primary);

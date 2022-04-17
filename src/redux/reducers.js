@@ -24,7 +24,7 @@ export const requestProducts = (state = initialProductsState, action = {}) => {
 };
 
 const initialCurrencyState = {
-  currency: "$",
+  currency: "",
 };
 
 export const changeCurrency = (state = initialCurrencyState, action = {}) => {

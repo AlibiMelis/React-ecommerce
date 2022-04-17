@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Select } from "antd";
 import { Link } from "react-router-dom";
 import { ReactComponent as LogoIcon } from "../a-logo.svg";
 import { setCurrency } from "../redux/actions";
@@ -6,7 +7,12 @@ import { connect } from "react-redux";
 import DropdownCart from "../Cart/DropdownCart";
 import { client } from "../lib/apolloClient";
 import { CategoryListQuery } from "../lib/queries";
+import "./Navbar.css";
+const { Option } = Select;
 
+const mapStateToProps = (state) => ({
+  currency: state.changeCurrency.currency,
+});
 const mapDispatchToProps = (dispatch) => ({
   onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
 });
@@ -25,6 +31,7 @@ class Navbar extends Component {
       const { currencies, categories } = await client
         .query({ query: CategoryListQuery })
         .then((result) => result.data);
+      this.props.onCurrencyChange(currencies[0].symbol);
       this.setState({
         currencies,
         categories,
@@ -41,11 +48,15 @@ class Navbar extends Component {
     }
   }
 
+  onCurChange = (selectedCur) => {
+    console.log(selectedCur);
+    this.props.onCurrencyChange(selectedCur);
+  };
+
   render() {
     const category = window.location.pathname.split("/")[1];
     // console.log(category);
     const { categories, currencies } = this.state;
-
     return (
       <nav className="navbar-container">
         <div className="navbar">
@@ -53,8 +64,8 @@ class Navbar extends Component {
             {categories.map((cat, ind) => (
               <Link className="link" to={`/${cat.name}`} key={ind}>
                 <div
-                  className={`category-item ${
-                    cat.name === category && "category-item-selected"
+                  className={`category-item${
+                    cat.name === category ? " category-item-selected" : ""
                   }`}
                 >
                   {cat.name}
@@ -69,10 +80,9 @@ class Navbar extends Component {
             </Link>
           </div>
 
-          <div>
-            <ul className="controls">
-              <li className="push-left">
-                <select
+          <div className="controls">
+            <div className="push-left">
+              {/* <select
                   onChange={(e) => this.props.onCurrencyChange(e.target.value)}
                   
                 >
@@ -82,12 +92,24 @@ class Navbar extends Component {
                       value={cur.symbol}
                     >{`${cur.symbol} ${cur.label}`}</option>
                   ))}
-                </select>
-              </li>
-              <li>
-                <DropdownCart />
-              </li>
-            </ul>
+                </select> */}
+              {this.state.currencies.length && (
+                <Select
+                  defaultValue={this.props.currency}
+                  onChange={this.onCurChange}
+                  optionLabelProp="value"
+                  className="currency-select"
+                  bordered={false}
+                >
+                  {currencies.map((cur) => (
+                    <Option value={cur.symbol} key={cur.symbol}>
+                      {`${cur.symbol}${cur.label}`}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            </div>
+            <DropdownCart toggleMinicart={this.props.toggleMinicart}/>
           </div>
         </div>
       </nav>
@@ -95,4 +117,4 @@ class Navbar extends Component {
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

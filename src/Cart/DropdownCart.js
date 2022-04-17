@@ -32,28 +32,37 @@ class DropdownCart extends Component {
     } else {
       document.removeEventListener("mousedown", this.onOutsideClick);
     }
+    this.props.toggleMinicart();
     this.setState({ open: !this.state.open });
   };
 
   onOutsideClick = (event) => {
-    console.log("click");
     if (!this.minicartRef.current?.contains(event.target)) {
+      console.log("click");
       this.setState({ open: false });
+      this.props.toggleMinicart();
       document.removeEventListener("mousedown", this.onOutsideClick);
     }
   };
 
   render() {
     const { items, currency, onIncrement, onDecrement } = this.props;
-    const total = items.reduce((acc, item) => {
-      return acc + item.product.prices.find(p => p.currency.symbol === currency).amount * item.qty
-    }, 0).toFixed(2);
+    const total = items
+      .reduce((acc, item) => {
+        return (
+          acc +
+          item.product.prices.find((p) => p.currency.symbol === currency)
+            .amount *
+            item.qty
+        );
+      }, 0)
+      .toFixed(2);
     return (
       <div className="minicart-container" ref={this.minicartRef}>
-        <div className="cart-counter">{items.length}</div>
-        <button onClick={this.onMinicartClick}>
+        <div className="minicart-icon" onClick={this.onMinicartClick}>
           <CartIcon />
-        </button>
+          <div className="cart-counter">{items.length}</div>
+        </div>
         {this.state.open && (
           <div className="dropdown">
             <div>{`My bag. ${items.length} items.`}</div>
@@ -73,10 +82,24 @@ class DropdownCart extends Component {
               <div className="push-left">{`${currency}${total}`}</div>
             </div>
             <div className="dropdown-buttons">
-              <Link to="/cart" className="link btn btn-secondary" onClick={() => {this.setState({open: false})}}>
+              <Link
+                to="/cart"
+                className="link btn btn-secondary"
+                onClick={() => {
+                  this.setState({ open: false });
+                  this.props.toggleMinicart();
+                }}
+              >
                 View bag
               </Link>
-              <Link to="/cart" className="link btn btn-primary" onClick={() => {this.setState({open: false})}}>
+              <Link
+                to="/cart"
+                className="link btn btn-primary"
+                onClick={() => {
+                  this.setState({ open: false });
+                  this.props.toggleMinicart();
+                }}
+              >
                 Check out
               </Link>
             </div>
