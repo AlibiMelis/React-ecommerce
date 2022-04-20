@@ -106,8 +106,28 @@ img {
   align-items: center;
   padding: 0px 10px;
   font-size: 16px;
+  position: relative;
 }
-.category-item-selected {
+
+.category-item.unselected::before {
+  content: '';
+  position: absolute;
+  height: 2px;
+  background-color: var(--color-primary);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scaleX(0);
+
+  transition: transform 0.3s ease-in-out;
+}
+
+.category-item.unselected:hover::before,
+.category-item.unselected:focus::before {
+  transform: scale(1);
+}
+
+.category-item.selected {
   color: var(--color-primary);
   font-weight: 600;
   border-bottom: var(--color-primary) 2px solid;

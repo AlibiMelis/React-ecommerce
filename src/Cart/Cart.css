@@ -4,16 +4,8 @@
   cursor: pointer;
 }
 
-.dropdown {
-  position: absolute;
-  top: var(--nav-height);
-  right: 5%;
-  background: white;
-  width: 325px;
-  padding: 1rem;
-}
-
-.cart-counter {
+.minicart-icon::before {
+  content: attr(cart-counter);
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -29,6 +21,15 @@
   justify-content: center;
   align-items: center;
   font-size: 12px;
+}
+
+.dropdown {
+  position: absolute;
+  top: var(--nav-height);
+  right: 5%;
+  background: white;
+  width: 325px;
+  padding: 1rem;
 }
 
 .dropdown-cart-item {

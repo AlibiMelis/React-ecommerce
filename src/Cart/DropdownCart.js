@@ -59,9 +59,9 @@ class DropdownCart extends Component {
       .toFixed(2);
     return (
       <div className="minicart-container" ref={this.minicartRef}>
-        <div className="minicart-icon" onClick={this.onMinicartClick}>
+        <div className="minicart-icon" onClick={this.onMinicartClick} cart-counter={items.length}>
           <CartIcon />
-          <div className="cart-counter">{items.length}</div>
+          {/* <div className="cart-counter">{items.length}</div> */}
         </div>
         {this.state.open && (
           <div className="dropdown">

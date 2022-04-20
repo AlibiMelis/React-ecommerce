@@ -65,7 +65,7 @@ class Navbar extends Component {
               <Link className="link" to={`/${cat.name}`} key={ind}>
                 <div
                   className={`category-item${
-                    cat.name === category ? " category-item-selected" : ""
+                    cat.name === category ? " selected" : " unselected"
                   }`}
                 >
                   {cat.name}
