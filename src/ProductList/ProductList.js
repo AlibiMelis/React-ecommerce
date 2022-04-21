@@ -27,16 +27,16 @@ class ProductList extends Component {
 
   render() {
     const { products } = this.props;
+    console.log(products);
     const { category } = this.props.match.params;
 
     return !this.props.isPending ? (
       <main>
         <div className="header">{category}</div>
         <div className="product-list-container">
-          {products.length &&
-            products.map((product) => (
-              <ProductCard product={product} key={product.id} />
-            ))}
+          {products.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
         </div>
       </main>
     ) : (

@@ -6,7 +6,7 @@
   margin: 0px 6px;
   width: 63px;
   height: 45px;
-  border: 1px solid var(--color-text);
+  border: 1px solid var(--text-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@
 
 .text-selected {
   color: white;
-  background: var(--color-text);
+  background: var(--text-color);
 }
 
 .color-selected {

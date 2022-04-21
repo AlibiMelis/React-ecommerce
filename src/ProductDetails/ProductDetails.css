@@ -75,15 +75,15 @@
   cursor: pointer;
 }
 .active {
-  background: var(--color-primary);
+  background: var(--accent-color);
   color: white;
 }
 .active:hover {
   filter: brightness(90%)
 }
 
-.inactive {
-  background: var(--color-text);
+/* .inactive {
+  background: var(--text-color);
   color: white;
   filter: opacity(0.5);
-}
+} */

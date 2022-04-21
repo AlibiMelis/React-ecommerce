@@ -5,6 +5,11 @@ export const CategoryListQuery = gql`
     categories {
       name
     }
+  }
+`;
+
+export const CurrencyListQuery = gql`
+  {
     currencies {
       label
       symbol

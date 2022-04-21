@@ -1,0 +1,10 @@
+.shop-container {
+  margin-top: var(--nav-height);
+  background: var(--background-color);
+  min-height: 100%;
+}
+
+.shop-container.inactive {
+  filter: brightness(0.3);
+  pointer-events: none;
+}

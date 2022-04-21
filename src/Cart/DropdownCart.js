@@ -19,7 +19,7 @@ class DropdownCart extends Component {
   constructor(props) {
     super(props);
     this.minicartRef = createRef();
-    this.state = { open: false };
+    // this.state = { open: false };
   }
 
   componentWillUnmount() {
@@ -27,19 +27,19 @@ class DropdownCart extends Component {
   }
 
   onMinicartClick = () => {
-    if (!this.state.open) {
+    if (!this.props.minicartOpen) {
       document.addEventListener("mousedown", this.onOutsideClick);
     } else {
       document.removeEventListener("mousedown", this.onOutsideClick);
     }
     this.props.toggleMinicart();
-    this.setState({ open: !this.state.open });
+    // this.setState({ open: !this.state.open });
   };
 
   onOutsideClick = (event) => {
     if (!this.minicartRef.current?.contains(event.target)) {
       console.log("click");
-      this.setState({ open: false });
+      // this.setState({ open: false });
       this.props.toggleMinicart();
       document.removeEventListener("mousedown", this.onOutsideClick);
     }
@@ -63,7 +63,7 @@ class DropdownCart extends Component {
           <CartIcon />
           {/* <div className="cart-counter">{items.length}</div> */}
         </div>
-        {this.state.open && (
+        {this.props.minicartOpen && (
           <div className="dropdown">
             <div>{`My bag. ${items.length} items.`}</div>
             <div className="flex">
@@ -86,7 +86,7 @@ class DropdownCart extends Component {
                 to="/cart"
                 className="link btn btn-secondary"
                 onClick={() => {
-                  this.setState({ open: false });
+                  // this.setState({ open: false });
                   this.props.toggleMinicart();
                 }}
               >
@@ -96,7 +96,7 @@ class DropdownCart extends Component {
                 to="/cart"
                 className="link btn btn-primary"
                 onClick={() => {
-                  this.setState({ open: false });
+                  // this.setState({ open: false });
                   this.props.toggleMinicart();
                 }}
               >

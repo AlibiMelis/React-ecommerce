@@ -1,2 +1,1 @@
-export const priceToString = (price) =>
-  `${price.currency.symbol}${price.amount}`;
+export const priceToString = (price) => price ? `${price.currency.symbol}${price.amount}` : "";
