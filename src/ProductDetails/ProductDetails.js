@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { getProduct } from "../lib/apolloClient";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
-import { priceToString } from "../lib/utils";
+import { findProductPrice, priceToString } from "../lib/utils";
 
 import ProductAttribute from "./ProductAttribute";
 import Loader from "../Loader";
@@ -37,6 +37,8 @@ class ProductDetails extends Component {
     loadDetails(this.props.match.params.id);
   }
 
+  onChangeImage = (img) => this.setState({ image: img });
+
   onSetAttr = (attr, value) => {
     const attributes = { ...this.state.attributes };
     attributes[attr] = value;
@@ -46,7 +48,7 @@ class ProductDetails extends Component {
   render() {
     console.log("Rendeing", this.state.attributes);
     const { product, attributes, loading } = this.state;
-    const { currency } = this.props;
+    const { currency, onAddToCart } = this.props;
 
     return (
       <main className="left-aligned">
@@ -55,47 +57,38 @@ class ProductDetails extends Component {
             <div className="product-container">
               <div className="product-gallery">
                 {product.gallery.map((img, ind) => (
-                    <img
-                      src={img}
-                      className="product-gallery-image"
-                      key={`image${ind}`}
-                      onClick={() => this.setState({ image: img })}
-                      alt={product.name}
-                    />
+                  <img src={img} onClick={() => this.onChangeImage(img)} alt={product.name} key={`image${ind}`} />
                 ))}
               </div>
-              <div className="product-image">
-                <img src={this.state.image} alt={product.name} />
-              </div>
+              <img src={this.state.image} className="product-image" alt={product.name} />
               <div className="product-details">
-                <div className="big-text semibold-text">{product.brand}</div>
-                <div className="big-text name">{product.name}</div>
-                <div>
+                <div className="brand">{product.brand}</div>
+                <div className="name">{product.name}</div>
+
+                <div className="attributes">
                   {product.attributes.map((attribute) => (
                     <ProductAttribute
                       attr={attribute}
                       onSetAttr={this.onSetAttr}
                       selected={this.state.attributes[attribute.id]}
+                      className="attribute"
                       key={attribute.id}
                     />
                   ))}
                 </div>
-                <div className="bold-text uppercase">
-                  <span className="price-label">Price:</span>
-                  <div className="price">
-                    {priceToString(product.prices.find((p) => p.currency.symbol === currency))}
+
+                <div className="price">
+                  <span>Price:</span>
+                  <div className="price-tag">
+                    {priceToString(findProductPrice(product, currency))}
                   </div>
                 </div>
-                {product.inStock ? (
-                  <div
-                    className="add-to-cart uppercase active"
-                    onClick={() => this.props.onAddToCart(product, attributes)}
-                  >
-                    add to cart
-                  </div>
-                ) : (
-                  <div className="add-to-cart uppercase inactive">sorry, out of stock</div>
-                )}
+
+                <div
+                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`}
+                  onClick={product.inStock ? () => onAddToCart(product, attributes) : null}
+                ></div>
+
                 <div className="description" dangerouslySetInnerHTML={{ __html: product.description }} />
               </div>
             </div>

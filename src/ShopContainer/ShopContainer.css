@@ -2,9 +2,11 @@
   margin-top: var(--nav-height);
   background: var(--background-color);
   min-height: 100%;
+
+  transition: filter 200ms ease-in;
 }
 
 .shop-container.inactive {
-  filter: brightness(0.3);
+  filter: brightness(0.6);
   pointer-events: none;
 }

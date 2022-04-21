@@ -1,0 +1,46 @@
+.minicart-item {
+  margin-top: 2.5rem;
+  width: 100%;
+  display: flex;
+  height: var(--minicart-item-height);
+
+  --minicart-item-height: 120px;
+}
+
+.minicart .quantity-control {
+  width: var(--quantity-btn-size);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 10px;
+
+  --quantity-btn-size: 24px;
+}
+.quantity-control button {
+  width: var(--quantity-btn-size);
+  height: var(--quantity-btn-size);
+  border: 1px solid var(--text-color);
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 200ms ease;
+}
+.quantity-control button:hover {
+  background: var(--text-color);
+  color: white;
+}
+
+.minicart-item .details {
+  flex: 1 1 0;
+}
+
+.minicart-item .price {
+  font-weight: 500;
+}
+
+.minicart-item img {
+  height: 100%;
+  aspect-ratio: 3 / 4;
+}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as CartIcon } from "../cart.svg";
 import { connect } from "react-redux";
-import { categoryFromLocation, priceToString } from "../lib/utils";
+import { categoryFromLocation, findProductPrice, priceToString } from "../lib/utils";
 import { addToCart } from "../redux/actions";
 import { getProduct } from "../lib/apolloClient";
 
@@ -34,9 +34,10 @@ class ProductCard extends Component {
 
   render() {
     const category = categoryFromLocation();
-    const { id, name, gallery, prices, brand, inStock } = this.props.product;
+    const { product } = this.props;
+    const { id, name, gallery, brand, inStock } = product;
     const { currency } = this.props;
-    const price = prices.find((p) => p.currency.symbol === currency);
+    const price = findProductPrice(product, currency);
 
     return (
       <div

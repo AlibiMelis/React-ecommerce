@@ -2,6 +2,7 @@
   --accent-color: #5ece7b;
   --text-color: #1d1f22;
   --background-color: #ffffff;
+  --shadow-color: #A8ACB033;
   --nav-height: 80px;
   --nav-load-time: 200ms;
 }
@@ -38,7 +39,7 @@ img {
   color: var(--text-color);
 }
 .link:hover {
-  color: inherit;
+  color: inherit; /* TODO: Problem with hovering over white text */
 }
 
 .header {

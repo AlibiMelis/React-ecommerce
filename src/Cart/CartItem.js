@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { priceToString } from "../lib/utils";
+import { findProductPrice, priceToString } from "../lib/utils";
 import ProductAttribute from "../ProductDetails/ProductAttribute";
 import "./CartItem.css";
 
@@ -33,9 +33,7 @@ export class CartItem extends Component {
 
   render() {
     const { item, currency, inc, dec } = this.props;
-    const price = item.product.prices.find(
-      (p) => p.currency.symbol === currency
-    );
+    const price = findProductPrice(item.product, currency);
     return (
       <div className="cart-item">
         <div className="grow details">
