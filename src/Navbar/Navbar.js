@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 
 import "./Navbar.css";
 import { ReactComponent as LogoIcon } from "../a-logo.svg";
+import { categoryFromLocation } from "../lib/utils";
 
 const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
@@ -29,7 +30,7 @@ class Navbar extends Component {
   // }
 
   render() {
-    const category = window.location.pathname.split("/")[2];
+    const category = categoryFromLocation();
     const { categories, currencies, toggleMinicart, minicartOpen } = this.props;
     const { onCurrencyChange } = this.props;
 

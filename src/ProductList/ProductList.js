@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import ProductCard from "./ProductCard";
-import "./ProductList.css";
 import { requestProducts } from "../redux/actions";
 import { connect } from "react-redux";
+import ProductCard from "./ProductCard";
+
+import "./ProductList.css";
+import Loader from "../Loader";
 
 const mapStateToProps = (state) => ({
   isPending: state.requestProducts.isPending,
@@ -12,6 +14,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onRequestProducts: (category) => dispatch(requestProducts(category)),
 });
+
 class ProductList extends Component {
   componentDidMount() {
     const { category } = this.props.match.params;
@@ -26,21 +29,24 @@ class ProductList extends Component {
   }
 
   render() {
-    const { products } = this.props;
-    console.log(products);
+    const { products, isPending } = this.props;
     const { category } = this.props.match.params;
 
-    return !this.props.isPending ? (
+    return (
       <main>
-        <div className="header">{category}</div>
-        <div className="product-list-container">
-          {products.map((product) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
-        </div>
+        {!isPending ? (
+          <>
+            <div className="header category-header">{category}</div>
+            <div className="product-list">
+              {products.map((product) => (
+                <ProductCard product={product} key={product.id} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <Loader show />
+        )}
       </main>
-    ) : (
-      <main>Products are loading</main>
     );
   }
 }

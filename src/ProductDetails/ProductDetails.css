@@ -1,9 +1,6 @@
-:root {
-  --gallery-width: 80px;
-}
-
 .product-container {
   display: flex;
+  --gallery-width: 80px;
 }
 
 .product-gallery {

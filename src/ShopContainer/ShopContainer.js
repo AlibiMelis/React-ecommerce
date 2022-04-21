@@ -41,14 +41,21 @@ class ShopContainer extends Component {
   render() {
     const { minicartOpen, categories, currencies } = this.state;
     return (
-      <div className={`shop-container${minicartOpen ? " inactive" : ""}`}>
-        <Navbar categories={categories} currencies={currencies} toggleMinicart={this.toggleMinicart} minicartOpen={minicartOpen} />
-        <Switch>
-          <Route path="/shop/cart" component={Cart} />
-          <Route path="/shop/:category/:id" component={ProductDetails} />
-          <Route path="/shop/:category" component={ProductList} />
-        </Switch>
-      </div>
+      <>
+        <Navbar
+          categories={categories}
+          currencies={currencies}
+          toggleMinicart={this.toggleMinicart}
+          minicartOpen={minicartOpen}
+        />
+        <div className={`shop-container${minicartOpen ? " inactive" : ""}`}>
+          <Switch>
+            <Route path="/shop/cart" component={Cart} />
+            <Route path="/shop/:category/:id" component={ProductDetails} />
+            <Route path="/shop/:category" component={ProductList} />
+          </Switch>
+        </div>
+      </>
     );
   }
 }
