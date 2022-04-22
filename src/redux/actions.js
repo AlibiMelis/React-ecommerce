@@ -39,3 +39,8 @@ export const setItemAttribute = (item, attr, value) => ({
   type: actionTypes.SET_ITEM_ATTRIBUTE,
   payload: { item, attr, value },
 })
+
+export const removeFromCart = (item) => ({
+  type: actionTypes.REMOVE_FROM_CART,
+  payload: item,
+})

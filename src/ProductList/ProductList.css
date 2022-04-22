@@ -1,5 +1,6 @@
 .category-header {
   opacity: 0;
+  text-transform: capitalize;
   transform: translateY(-20px);
   animation: category-header-load 300ms ease-in-out var(--nav-load-time);
   animation-fill-mode: forwards;

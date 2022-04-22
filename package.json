@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
-    "antd": "^4.19.5",
     "graphql": "^16.3.0",
     "lodash": "^4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-hot-toast": "^2.2.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",

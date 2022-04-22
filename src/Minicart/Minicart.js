@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import MinicartItem from "./MinicartItem";
-import { decrementItemCount, incrementItemCount } from "../redux/actions";
+import { decrementItemCount, incrementItemCount, setItemAttribute } from "../redux/actions";
 import { calculateProductsTotal } from "../lib/utils";
 import { ReactComponent as CartIcon } from "../cart.svg";
 import "./Minicart.css";
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onIncrement: (item) => () => dispatch(incrementItemCount(item)),
   onDecrement: (item) => () => dispatch(decrementItemCount(item)),
+  onSetAttr: (item, attr, value) => dispatch(setItemAttribute(item, attr, value)),
 });
 
 class Minicart extends Component {
@@ -43,7 +44,7 @@ class Minicart extends Component {
   };
 
   render() {
-    const { items, currency, onIncrement, onDecrement, minicartOpen, toggleMinicart } = this.props;
+    const { items, currency, onIncrement, onDecrement, onSetAttr, minicartOpen } = this.props;
     const total = calculateProductsTotal(items, currency).toFixed(2);
 
     return (
@@ -58,9 +59,18 @@ class Minicart extends Component {
               {` ${items.length} items.`}
             </div>
 
-            {this.props.items.map((item, ind) => (
-              <MinicartItem item={item} currency={currency} key={ind} inc={onIncrement(item)} dec={onDecrement(item)} />
-            ))}
+            <div className="items">
+              {this.props.items.map((item, ind) => (
+                <MinicartItem
+                  item={item}
+                  currency={currency}
+                  key={ind}
+                  inc={onIncrement(item)}
+                  dec={onDecrement(item)}
+                  onSetAttr={onSetAttr}
+                />
+              ))}
+            </div>
 
             <div className="total">
               <div>Total:</div>
@@ -68,10 +78,10 @@ class Minicart extends Component {
             </div>
 
             <div className="minicart-buttons">
-              <Link to="/shop/cart" className="link btn btn-secondary" onClick={toggleMinicart}>
+              <Link to="/shop/cart" className="link btn btn-secondary" onClick={this.onMinicartClick}>
                 View bag
               </Link>
-              <Link to="#" className="link btn btn-primary" onClick={toggleMinicart}>
+              <Link to="#" className="link btn btn-primary" onClick={this.onMinicartClick}>
                 Check out
               </Link>
             </div>

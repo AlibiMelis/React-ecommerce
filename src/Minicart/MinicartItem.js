@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { findProductPrice, priceToString } from "../lib/utils";
+import ProductAttribute from "../ProductDetails/ProductAttribute";
 import "./MinicartItem.css";
 
 class MinicartItem extends Component {
+  onSetAttr = (attr, value) => this.props.onSetAttr(this.props.item, attr, value);
+  
   render() {
     const { item, currency, inc, dec } = this.props;
     const price = findProductPrice(item.product, currency);
@@ -12,7 +15,16 @@ class MinicartItem extends Component {
           <div>{item.product.brand}</div>
           <div>{item.product.name}</div>
           <div className="price">{priceToString(price)}</div>
-          
+          {item.product.attributes.map((attribute) => (
+            <ProductAttribute
+              condensed
+              className="attributes"
+              attr={attribute}
+              onSetAttr={this.onSetAttr}
+              selected={item.attributes ? item.attributes[attribute.id] : undefined}
+              key={attribute.id}
+            />
+          ))}
         </div>
         <div className="quantity-control">
           <button onClick={inc}>+</button>

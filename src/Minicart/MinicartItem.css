@@ -2,13 +2,22 @@
   margin-top: 2.5rem;
   width: 100%;
   display: flex;
-  height: var(--minicart-item-height);
+  min-height: var(--minicart-item-height);
 
   --minicart-item-height: 120px;
 }
 
+.minicart-item:first-child {
+  margin-top: 0;
+}
+
+.minicart-item .attributes {
+  margin-top: 4px;
+}
+
 .minicart .quantity-control {
   width: var(--quantity-btn-size);
+  height: var(--minicart-item-height);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -41,6 +50,6 @@
 }
 
 .minicart-item img {
-  height: 100%;
+  height: var(--minicart-item-height);
   aspect-ratio: 3 / 4;
 }

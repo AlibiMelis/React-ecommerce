@@ -2,6 +2,9 @@
   position: relative;
   padding: 0 5px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .minicart-icon::before {
@@ -31,6 +34,12 @@
   width: 325px;
   padding: 1rem;
   font-size: 1rem;
+}
+
+.minicart .items {
+  margin-top: 1rem;
+  max-height: 40vh;
+  overflow-y: scroll;
 }
 
 .minicart .total {

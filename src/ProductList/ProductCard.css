@@ -1,19 +1,24 @@
 .product-card-container {
   width: 370px;
   margin: 2rem 2rem;
-  padding: 1rem 1rem;
   position: relative;
   
+  padding: 1rem 1rem;
+  cursor: pointer;
   opacity: 0;
   transform: translateY(-30px);
   animation: product-card-load 400ms ease-in-out calc(var(--nav-load-time) + 200ms);
   animation-fill-mode: forwards;
+
+  --btn-display: none;
 }
 
 .product-card-container.in-stock:hover,
 .product-card-container.in-stock:focus {
-  box-shadow: 0px 4px 35px var(--shadow-color); /* 19% opacity */
+  box-shadow: 0px 4px 35px var(--shadow-color);
   transition: box-shadow 300ms ease-out;
+
+  --btn-display: flex;
 }
 .product-card-container.out-of-stock {
   filter: opacity(0.5);
@@ -53,10 +58,11 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
+  cursor: pointer;
   position: absolute;
   bottom: 74px;
   right: 2rem; /* TODO: how to position the button properly */
-  display: flex;
+  display: var(--btn-display);
   justify-content: center;
   align-items: center;
 }

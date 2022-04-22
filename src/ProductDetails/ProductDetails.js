@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
 import { findProductPrice, priceToString } from "../lib/utils";
 
+import toast, { Toaster } from "react-hot-toast";
 import ProductAttribute from "./ProductAttribute";
 import Loader from "../Loader";
 import "./ProductDetails.css";
@@ -12,7 +13,7 @@ const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
 });
 const mapDispatchToProps = (dispatch) => ({
-  onAddToCart: (product, attributes) => dispatch(addToCart({ product, attributes: { ...attributes } })),
+  addToCart: (product, attributes) => dispatch(addToCart({ product, attributes: { ...attributes } })),
 });
 
 class ProductDetails extends Component {
@@ -45,22 +46,40 @@ class ProductDetails extends Component {
     this.setState({ attributes });
   };
 
+  onAddToCart = () => {
+    const { product, attributes } = this.state;
+    let complete = true;
+    for (const attr of product.attributes) {
+      if (!attributes[attr.id]) {
+        toast.error(`Please, select ${attr.name}`);
+        complete = false;
+      }
+    }
+    if (!complete) return;
+
+    this.props.addToCart(product, attributes);
+    toast.success("Added to your cart");
+  };
+
   render() {
-    console.log("Rendeing", this.state.attributes);
-    const { product, attributes, loading } = this.state;
-    const { currency, onAddToCart } = this.props;
+    const { product, loading } = this.state;
+    const { currency } = this.props;
 
     return (
       <main className="left-aligned">
         {!loading ? (
           product ? (
             <div className="product-container">
+              <Toaster position="bottom-right" />
               <div className="product-gallery">
                 {product.gallery.map((img, ind) => (
                   <img src={img} onClick={() => this.onChangeImage(img)} alt={product.name} key={`image${ind}`} />
                 ))}
               </div>
-              <img src={this.state.image} className="product-image" alt={product.name} />
+              <div className="product-image">
+                <img src={this.state.image} alt={product.name} />
+              </div>
+
               <div className="product-details">
                 <div className="brand">{product.brand}</div>
                 <div className="name">{product.name}</div>
@@ -79,14 +98,12 @@ class ProductDetails extends Component {
 
                 <div className="price">
                   <span>Price:</span>
-                  <div className="price-tag">
-                    {priceToString(findProductPrice(product, currency))}
-                  </div>
+                  <div className="price-tag">{priceToString(findProductPrice(product, currency))}</div>
                 </div>
 
                 <div
-                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`}
-                  onClick={product.inStock ? () => onAddToCart(product, attributes) : null}
+                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`} // TODO: is this a good way to create button?
+                  onClick={product.inStock ? this.onAddToCart : null}
                 ></div>
 
                 <div className="description" dangerouslySetInnerHTML={{ __html: product.description }} />

@@ -1,11 +1,15 @@
 .navbar-container {
   height: var(--nav-height);
   width: 100%;
-  position: fixed;
+  background: var(--background-color);
   top: 0;
   z-index: 99;
-  background: var(--background-color);
-  padding: 0 5rem;
+  position: fixed;
+}
+
+.navbar {
+  height: 100%;
+  margin: 0 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +52,7 @@
   background-color: var(--accent-color);
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: calc(-1 * var(--border-size));
   transform: scaleX(0);
 
   transition: transform 300ms ease-in-out;
@@ -85,5 +89,11 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    margin: 0 1rem;
   }
 }

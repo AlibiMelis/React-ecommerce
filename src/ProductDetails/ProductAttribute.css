@@ -1,10 +1,15 @@
 .attribute-container.normal {
   --option-width: 4rem;
   --option-height: 3rem;
+  --picker-size: 1.2rem;
+  --margin: 6px;
 }
 .attribute-container.condensed {
-  --option-width: 4rem;
-  --option-height: 3rem;
+  font-size: .8rem;
+  --option-width: 1.5rem;
+  --option-height: 1.5rem;
+  --picker-size: 0.7rem;
+  --margin: 3px;
 }
 
 .attribute-name {
@@ -16,10 +21,11 @@
 
 .attribute-options {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .attribute-options .option {
-  margin-left: 12px;
+  margin: var(--margin);
   width: var(--option-width);
   height: var(--option-height);
   border: 1px solid var(--text-color);
@@ -27,13 +33,17 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 .attribute-options .option:first-child {
   margin-left: 0px;
 }
 
-.attribute-options .option:hover {
+.text-option:hover {
+  color: white;
+  background-color: var(--text-color);
+}
+.color-option:hover {
   transform: translateY(-3px);
 }
 
@@ -48,15 +58,16 @@
 }
 
 .option.color-selected::before {
-  content: 'c';
+  content: '';
   position: absolute;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: var(--picker-size);
+  height: var(--picker-size);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: var(--accent-color);
+  border: 1px solid var(--text-color);
   color: white;
   font-size: 1rem;
 

@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrency } from "../redux/actions";
+import { getCategories, getCurrencies } from "../lib/apolloClient";
 
-// Containers
 import Navbar from "../Navbar/Navbar";
 import ProductList from "../ProductList/ProductList";
 import ProductDetails from "../ProductDetails/ProductDetails";
 import Cart from "../Cart/Cart";
-
-import { getCategories, getCurrencies } from "../lib/apolloClient";
-
 import "./ShopContainer.css";
 
 const mapDispatchToProps = (dispatch) => ({
