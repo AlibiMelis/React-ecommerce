@@ -12,9 +12,23 @@ import { createLogger } from "redux-logger";
 
 const rootReducer = combineReducers({ requestProducts, changeCurrency, changeCart });
 
+let initialStore = {};
+try {
+  initialStore = sessionStorage.getItem("myApp") ? JSON.parse(sessionStorage.getItem("myApp")) : {};
+} catch (e) {
+  console.log('Session storage error', e);
+}
+const storeSaver = (store) => (next) => (action) => {
+  const nextResult = next(action);
+  const currentStore = store.getState();
+  sessionStorage.setItem("myApp", JSON.stringify({...currentStore}));
+  return nextResult;
+}
+
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunkMiddleware, createLogger())
+  initialStore,
+  applyMiddleware(thunkMiddleware, createLogger(), storeSaver)
 );
 
 ReactDOM.render(
