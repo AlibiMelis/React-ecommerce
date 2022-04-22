@@ -7,7 +7,7 @@ import { getProduct } from "../lib/apolloClient";
 import toast, { Toaster } from "react-hot-toast";
 
 import "./ProductList.css";
-import Loader from "../Loader";
+import Loader from "../SharedComponents/Loader";
 
 const mapStateToProps = (state) => ({
   isPending: state.requestProducts.isPending,

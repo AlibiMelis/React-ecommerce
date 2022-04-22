@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as CartIcon } from "../cart.svg";
+import { ReactComponent as CartIcon } from "../assets/white-cart.svg";
 import { connect } from "react-redux";
 import { categoryFromLocation, findProductPrice, priceToString } from "../lib/utils";
-
 
 import "./ProductCard.css";
 
@@ -19,19 +18,11 @@ class ProductCard extends Component {
     const price = findProductPrice(product, currency);
 
     return (
-      <div
-        className={`product-card-container ${inStock ? "in-stock" : "out-of-stock"}`}
-        // onMouseOver={this.onMouseOver}
-        // onMouseOut={this.onMouseOut}
-      >
-        <div
-            className="add-to-cart"
-            // hidden={this.state.isHovered && inStock}
-            onClick={onAddToCart}
-          >
-            <CartIcon color="white" /> 
-            {/* TODO: Doesn't change color */}
-          </div>
+      <div className={`product-card-container ${inStock ? "in-stock" : "out-of-stock"}`}>
+        <div className="add-to-cart" onClick={onAddToCart}>
+          <CartIcon color="white" />
+          {/* TODO: Doesn't change color */}
+        </div>
         <Link to={`/shop/${category}/${id}`} className="link product-card">
           <img src={gallery[0]} alt={name} />
           <div className="product-card-label">

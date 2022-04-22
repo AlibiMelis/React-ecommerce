@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import Minicart from "../Minicart/Minicart";
-import { ReactComponent as LogoIcon } from "../a-logo.svg";
+import { ReactComponent as LogoIcon } from "../assets/a-logo.svg";
 import { categoryFromLocation } from "../lib/utils";
 import { setCurrency } from "../redux/actions";
 import { connect } from "react-redux";

@@ -6,7 +6,7 @@ import { findProductPrice, priceToString } from "../lib/utils";
 
 import toast, { Toaster } from "react-hot-toast";
 import ProductAttribute from "./ProductAttribute";
-import Loader from "../Loader";
+import Loader from "../SharedComponents/Loader";
 import "./ProductDetails.css";
 
 const mapStateToProps = (state) => ({

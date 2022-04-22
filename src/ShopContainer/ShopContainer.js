@@ -10,6 +10,9 @@ import ProductDetails from "../ProductDetails/ProductDetails";
 import Cart from "../Cart/Cart";
 import "./ShopContainer.css";
 
+const mapStateToProps = (state) => ({
+  currency: state.changeCurrency.currency,
+})
 const mapDispatchToProps = (dispatch) => ({
   onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
 });
@@ -24,7 +27,7 @@ class ShopContainer extends Component {
     const loadData = async () => {
       const { categories } = await getCategories();
       const { currencies } = await getCurrencies();
-      this.props.onCurrencyChange(currencies[0].symbol);
+      if (this.props.currency === "") this.props.onCurrencyChange(currencies[0].symbol);
       this.setState({ currencies, categories });
     };
 
@@ -57,4 +60,4 @@ class ShopContainer extends Component {
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(ShopContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopContainer);

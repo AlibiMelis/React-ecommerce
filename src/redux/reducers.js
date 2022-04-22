@@ -49,7 +49,6 @@ const compareItems = (a, b) => {
 export const changeCart = (state = initialCartState, action = {}) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
-      // TODO: Need to check if inside the cart already
       const itemToAdd = state.items.find((i) => compareItems(i, action.payload));
       if (!itemToAdd) {
         return {
@@ -78,7 +77,6 @@ export const changeCart = (state = initialCartState, action = {}) => {
     case actionTypes.DECREMENT_ITEM_COUNT:
       const itemToDec = state.items.find((i) => lodash.isEqual(i, action.payload));
       if (!itemToDec || itemToDec.qty < 2) return state;
-
       return {
         ...state,
         items: state.items.map((i) => (lodash.isEqual(i, action.payload) ? { ...i, qty: i.qty - 1 } : i)),
@@ -86,11 +84,9 @@ export const changeCart = (state = initialCartState, action = {}) => {
 
     case actionTypes.SET_ITEM_ATTRIBUTE:
       const itemToSet = state.items.find((i) => lodash.isEqual(i, action.payload.item));
-      console.log(itemToSet);
       if (!itemToSet) return state;
       const attr = { ...itemToSet.attributes };
       attr[action.payload.attr] = action.payload.value;
-      console.log(attr);
       return {
         ...state,
         items: state.items.map((i) => (lodash.isEqual(i, action.payload.item) ? { ...i, attributes: attr } : i)),
