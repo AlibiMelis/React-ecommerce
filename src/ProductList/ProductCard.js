@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as CartIcon } from "../assets/white-cart.svg";
 import { connect } from "react-redux";
-import { categoryFromLocation, findProductPrice, priceToString } from "../lib/utils";
+import { findProductPrice, priceToString } from "../lib/utils";
 
 import "./ProductCard.css";
 
@@ -12,16 +12,14 @@ const mapStateToProps = (state) => ({
 
 class ProductCard extends Component {
   render() {
-    const category = categoryFromLocation();
     const { product, currency, onAddToCart } = this.props;
-    const { id, name, gallery, brand, inStock } = product;
+    const { id, name, gallery, brand, inStock, category } = product;
     const price = findProductPrice(product, currency);
 
     return (
       <div className={`product-card-container ${inStock ? "in-stock" : "out-of-stock"}`}>
         <div className="add-to-cart" onClick={onAddToCart}>
-          <CartIcon color="white" />
-          {/* TODO: Doesn't change color */}
+          <CartIcon />
         </div>
         <Link to={`/shop/${category}/${id}`} className="link product-card">
           <img src={gallery[0]} alt={name} />

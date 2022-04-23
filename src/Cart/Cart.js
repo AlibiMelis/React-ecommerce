@@ -17,6 +17,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class Cart extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+  
   removeItemFromCart = (item) => () => {
     this.props.onRemoveFromCart(item);
     toast.success("Item is removed from your cart");

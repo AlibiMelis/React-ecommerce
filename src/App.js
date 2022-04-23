@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import ShopContainer from "./ShopContainer/ShopContainer";
 import "./App.css";
 
@@ -9,7 +8,10 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <ShopContainer />
+          <Switch>
+            <Route path="/shop" component={ShopContainer} />
+            <Redirect from="/" to="/shop" />
+          </Switch>
         </Router>
       </div>
     );

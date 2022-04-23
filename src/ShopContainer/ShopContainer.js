@@ -27,8 +27,13 @@ class ShopContainer extends Component {
     const loadData = async () => {
       const { categories } = await getCategories();
       const { currencies } = await getCurrencies();
-      if (this.props.currency === "") this.props.onCurrencyChange(currencies[0].symbol);
+
+      if (!this.props.currency) this.props.onCurrencyChange(currencies[0].symbol);
       this.setState({ currencies, categories });
+
+      if (window.location.pathname === "/shop" && categories.length) {
+        window.location.href += "/" + categories[0].name; // TODO: changing href doesn't seem right
+      }
     };
 
     loadData();

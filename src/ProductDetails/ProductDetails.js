@@ -33,6 +33,7 @@ class ProductDetails extends Component {
       const { product } = await getProduct(id);
       if (!product) return this.setState({ loading: false });
       this.setState({ product, image: product.gallery[0], loading: false });
+      window.scrollTo(0, 0); // TODO: using scrollTo
     };
 
     loadDetails(this.props.match.params.id);
@@ -102,7 +103,7 @@ class ProductDetails extends Component {
                 </div>
 
                 <div
-                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`} // TODO: is this a good way to create button?
+                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`}
                   onClick={product.inStock ? this.onAddToCart : null}
                 ></div>
 

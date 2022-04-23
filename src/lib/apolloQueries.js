@@ -24,6 +24,7 @@ export const ProductListQuery = (categoryTitle) => gql`
         id
         name
         inStock
+        category
         prices {
           currency {
             symbol

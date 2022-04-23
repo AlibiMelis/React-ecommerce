@@ -22,12 +22,14 @@ class ProductList extends Component {
   componentDidMount() {
     const { category } = this.props.match.params;
     this.props.onRequestProducts(category);
+    window.scrollTo(0, 0);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const { category } = this.props.match.params;
       this.props.onRequestProducts(category);
+      window.scrollTo(0, 0);
     }
   }
 
