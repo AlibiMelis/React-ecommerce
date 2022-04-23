@@ -1,19 +1,70 @@
 import React, { Component } from "react";
+import { requestProducts } from "../redux/actions";
+import { connect } from "react-redux";
 import ProductCard from "./ProductCard";
+import { addToCart } from "../redux/actions";
+import { getProduct } from "../lib/apolloClient";
+import toast, { Toaster } from "react-hot-toast";
+
 import "./ProductList.css";
+import Loader from "../SharedComponents/Loader";
+
+const mapStateToProps = (state) => ({
+  isPending: state.requestProducts.isPending,
+  products: state.requestProducts.products,
+});
+const mapDispatchToProps = (dispatch) => ({
+  onRequestProducts: (category) => dispatch(requestProducts(category)),
+  addToCart: (product, attributes) => dispatch(addToCart({ product, attributes })),
+});
 
 class ProductList extends Component {
+  componentDidMount() {
+    const { category } = this.props.match.params;
+    this.props.onRequestProducts(category);
+    window.scrollTo(0, 0);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      const { category } = this.props.match.params;
+      this.props.onRequestProducts(category);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  onAddToCart = async (id) => {
+    const { product } = await getProduct(id);
+    const attributes = product.attributes.reduce((acc, attr) => {
+      acc[attr.id] = attr.items[0].id;
+      return acc;
+    }, {});
+    this.props.addToCart(product, attributes);
+    toast.success("Added to your cart");
+  };
+
   render() {
-    const { products, selectedCur } = this.props;
-    console.log(products);
+    const { products, isPending } = this.props;
+    const { category } = this.props.match.params;
+
     return (
-      <main className="product-list-container">
-        {products.length && products.map((product) => (
-          <ProductCard product={product} key={product.id} selectedCur={selectedCur} />
-        ))}
+      <main>
+        {!isPending ? (
+          <>
+            <Toaster position="bottom-right" />
+            <div className="header category-header">{category}</div>
+            <div className="product-list">
+              {products.map((product) => (
+                <ProductCard product={product} onAddToCart={() => this.onAddToCart(product.id)} key={product.id} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <Loader show />
+        )}
       </main>
     );
   }
 }
 
-export default ProductList;
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

@@ -1,63 +1,53 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { ReactComponent as LogoIcon } from "../a-logo.svg";
+import { Link, NavLink } from "react-router-dom";
+
+import Minicart from "../Minicart/Minicart";
+import { ReactComponent as LogoIcon } from "../assets/a-logo.svg";
 import { setCurrency } from "../redux/actions";
 import { connect } from "react-redux";
-import DropdownCart from "../Cart/DropdownCart";
+import "./Navbar.css";
+import CurrencySelect from "../CurrencySelect/CurrencySelect";
 
+const mapStateToProps = (state) => ({
+  currency: state.changeCurrency.currency,
+});
 const mapDispatchToProps = (dispatch) => ({
   onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
 });
 
 class Navbar extends Component {
   render() {
-    const { categories, selectedCat, onCatSelect, currencies } = this.props;
+    const { categories, currencies, toggleMinicart, minicartOpen, onCurrencyChange, currency } = this.props;
 
     return (
-      <nav className="navbar">
-        <div className="categories-container">
-          {categories.map((cat, ind) => (
-            <button
-              className={`category-item ${
-                ind === selectedCat && "category-item-selected"
-              }`}
-              key={ind}
-              onClick={() => onCatSelect(ind)}
-              disabled={ind === selectedCat}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="logo">
-          <Link to="/">
-            <LogoIcon />
-          </Link>
-        </div>
-
-        <div >
-          <ul className="controls">
-            <li className="push-left">
-              <select
-                onChange={(e) => this.props.onCurrencyChange(e.target.value)}
+      <nav className="navbar-container">
+        <div className="navbar">
+          <div className="navbar-section categories">
+            {categories.map((cat, ind) => (
+              <NavLink
+                className={(isActive) => "link category" + (isActive ? " selected" : " unselected")}
+                to={`/shop/${cat.name}`}
+                key={ind}
               >
-                {currencies.map((cur, ind) => (
-                  <option
-                    key={cur.symbol}
-                    value={cur.symbol}
-                  >{`${cur.symbol} ${cur.label}`}</option>
-                ))}
-              </select>
-            </li>
-            <li>
-              <DropdownCart />
-            </li>
-          </ul>
+                {cat.name}
+              </NavLink>
+            ))}
+          </div>
+
+          <div className="navbar-section logo">
+            <Link to="/">
+              <LogoIcon />
+            </Link>
+          </div>
+
+          <div className="navbar-section controls">
+            <CurrencySelect options={currencies} value={currency} onChange={onCurrencyChange} />
+            <Minicart toggleMinicart={toggleMinicart} minicartOpen={minicartOpen} />
+          </div>
         </div>
       </nav>
     );
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

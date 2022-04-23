@@ -1,94 +1,124 @@
 import React, { Component } from "react";
-import { client } from "../lib/apolloClient";
-import { ProductDetailsQuery } from "../lib/queries";
-import { withRouter } from "../lib/withRouter";
-import "./ProductDetails.css";
+import { getProduct } from "../lib/apolloClient";
 import { connect } from "react-redux";
 import { addToCart } from "../redux/actions";
-import { priceToString } from "../lib/utils";
+import { findProductPrice, priceToString } from "../lib/utils";
+
+import toast, { Toaster } from "react-hot-toast";
+import ProductAttribute from "./ProductAttribute";
+import Loader from "../SharedComponents/Loader";
+import "./ProductDetails.css";
 
 const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
 });
 const mapDispatchToProps = (dispatch) => ({
-  onAddToCart: (product, attributes) =>
-    dispatch(addToCart({ product, attributes })),
+  addToCart: (product, attributes) => dispatch(addToCart({ product, attributes: { ...attributes } })),
 });
 
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       product: null,
       image: "",
+      attributes: {},
     };
   }
 
   componentDidMount() {
     const loadDetails = async (id) => {
-      const { product } = await client
-        .query({ query: ProductDetailsQuery(id) })
-        .then((result) => result.data);
-      this.setState({ product, image: product.gallery[0] });
+      this.setState({ loading: true });
+      const { product } = await getProduct(id);
+      if (!product) return this.setState({ loading: false });
+      this.setState({ product, image: product.gallery[0], loading: false });
+      window.scrollTo(0, 0); // TODO: using scrollTo
     };
 
-    loadDetails(this.props.params.id);
+    loadDetails(this.props.match.params.id);
   }
 
-  render() {
+  onChangeImage = (img) => this.setState({ image: img });
 
-    const { product } = this.state;
+  onSetAttr = (attr, value) => {
+    const attributes = { ...this.state.attributes };
+    attributes[attr] = value;
+    this.setState({ attributes });
+  };
+
+  onAddToCart = () => {
+    const { product, attributes } = this.state;
+    let complete = true;
+    for (const attr of product.attributes) {
+      if (!attributes[attr.id]) {
+        toast.error(`Please, select ${attr.name}`);
+        complete = false;
+      }
+    }
+    if (!complete) return;
+
+    this.props.addToCart(product, attributes);
+    toast.success("Added to your cart");
+  };
+
+  render() {
+    const { product, loading } = this.state;
     const { currency } = this.props;
 
     return (
-      <main>
-        {product && (
-          <div className="product-container">
-            <div className="product-gallery">
-              {product.gallery.map((img, ind) => (
-                <div
-                  className="product-gallery-image"
-                  key={`image${ind}`}
-                  onClick={() => this.setState({ image: img })}
-                >
-                  <img src={img} alt={product.name} />
-                </div>
-              ))}
-            </div>
-            <div className="product-image">
-              <img src={this.state.image} />
-            </div>
-            <div className="product-details">
-              <div className="big-text semibold-text">{product.brand}</div>
-              <div className="big-text name">{product.name}</div>
-              <div className="bold-text uppercase">
-                <span className="price-label">Price:</span>
-                <div className="price">
-                  {priceToString(
-                    product.prices.find((p) => p.currency.symbol === currency)
-                  )}
-                </div>
+      <main className="left-aligned">
+        {!loading ? (
+          product ? (
+            <div className="product-container">
+              <Toaster position="bottom-right" />
+              <div className="product-gallery">
+                {product.gallery.map((img, ind) => (
+                  <img src={img} onClick={() => this.onChangeImage(img)} alt={product.name} key={`image${ind}`} />
+                ))}
               </div>
-              <button
-                className="add-to-cart uppercase"
-                onClick={() => this.props.onAddToCart(product)}
-              >
-                add to cart
-              </button>
-              <div
-                className="description"
-                dangerouslySetInnerHTML={{ __html: product.description }}
-              />
+              <div className="product-image">
+                <img src={this.state.image} alt={product.name} />
+              </div>
+
+              <div className="product-details">
+                <div className="brand">{product.brand}</div>
+                <div className="name">{product.name}</div>
+
+                <div className="attributes">
+                  {product.attributes.map((attribute) => (
+                    <ProductAttribute
+                      attr={attribute}
+                      onSetAttr={this.onSetAttr}
+                      selected={this.state.attributes[attribute.id]}
+                      className="attribute"
+                      key={attribute.id}
+                    />
+                  ))}
+                </div>
+
+                <div className="price">
+                  <span>Price:</span>
+                  <div className="price-tag">{priceToString(findProductPrice(product, currency))}</div>
+                </div>
+
+                <div
+                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`}
+                  onClick={product.inStock ? this.onAddToCart : null}
+                ></div>
+
+                <div className="description" dangerouslySetInnerHTML={{ __html: product.description }} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div>Sorry, product not found</div>
+          )
+        ) : (
+          <Loader show />
         )}
       </main>
     );
   }
 }
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(ProductDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

@@ -1,0 +1,79 @@
+.product-card-container {
+  width: 370px;
+  margin: 2rem 2rem;
+  position: relative;
+  
+  padding: 1rem 1rem;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: product-card-load 400ms ease-in-out calc(var(--nav-load-time) + 200ms);
+  animation-fill-mode: forwards;
+
+  --btn-display: none;
+}
+
+.product-card-container.in-stock:hover,
+.product-card-container.in-stock:focus {
+  box-shadow: 0px 4px 35px var(--shadow-color);
+  transition: box-shadow 300ms ease-out;
+
+  --btn-display: flex;
+}
+.product-card-container.out-of-stock {
+  filter: opacity(0.5);
+  position: relative;
+}
+.product-card-container.out-of-stock::before {
+  content: 'out of stock';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.product-card-label {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+}
+.product-card-name {
+  font-weight: 200;
+}
+
+.product-card-container .add-to-cart {
+  background: var(--accent-color);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  bottom: 74px;
+  right: 2rem; /* TODO: how to position the button properly */
+  display: var(--btn-display);
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes product-card-load {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
