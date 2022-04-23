@@ -49,7 +49,7 @@
   font-weight: 500;
 }
 
-.minicart-item img {
+.minicart-item .image {
   height: var(--minicart-item-height);
   aspect-ratio: 3 / 4;
 }
