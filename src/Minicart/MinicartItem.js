@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { findProductPrice, priceToString } from "../lib/utils";
-import ProductAttribute from "../ProductDetails/ProductAttribute";
+import AttributeSelect from "../AttributeSelect/AttributeSelect";
 import "./MinicartItem.css";
 
 class MinicartItem extends Component {
@@ -16,12 +16,12 @@ class MinicartItem extends Component {
           <div>{item.product.name}</div>
           <div className="price">{priceToString(price)}</div>
           {item.product.attributes.map((attribute) => (
-            <ProductAttribute
+            <AttributeSelect
               condensed
               className="attributes"
               attr={attribute}
-              onSetAttr={this.onSetAttr}
-              selected={item.attributes ? item.attributes[attribute.id] : null}
+              onChange={this.onSetAttr}
+              value={item.attributes[attribute.id]}
               key={attribute.id}
             />
           ))}

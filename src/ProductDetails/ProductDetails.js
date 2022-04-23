@@ -5,7 +5,7 @@ import { addToCart } from "../redux/actions";
 import { findProductPrice, priceToString } from "../lib/utils";
 
 import toast, { Toaster } from "react-hot-toast";
-import ProductAttribute from "./ProductAttribute";
+import AttributeSelect from "../AttributeSelect/AttributeSelect";
 import Loader from "../SharedComponents/Loader";
 import "./ProductDetails.css";
 
@@ -87,10 +87,10 @@ class ProductDetails extends Component {
 
                 <div className="attributes">
                   {product.attributes.map((attribute) => (
-                    <ProductAttribute
+                    <AttributeSelect
                       attr={attribute}
-                      onSetAttr={this.onSetAttr}
-                      selected={this.state.attributes[attribute.id]}
+                      onChange={this.onSetAttr}
+                      value={this.state.attributes[attribute.id]}
                       className="attribute"
                       key={attribute.id}
                     />

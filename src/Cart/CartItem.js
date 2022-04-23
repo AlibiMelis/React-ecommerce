@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { findProductPrice, priceToString } from "../lib/utils";
-import ProductAttribute from "../ProductDetails/ProductAttribute";
+import AttributeSelect from "../AttributeSelect/AttributeSelect";
 import "./CartItem.css";
 
 export class CartItem extends Component {
@@ -33,11 +33,11 @@ export class CartItem extends Component {
           <div className="price-tag">{priceToString(price)}</div>
           <div>
             {item.product.attributes.map((attribute) => (
-              <ProductAttribute
+              <AttributeSelect
                 className="attribute"
                 attr={attribute}
-                onSetAttr={onSetAttr}
-                selected={item.attributes ? item.attributes[attribute.id] : undefined}
+                onChange={onSetAttr}
+                value={item.attributes ? item.attributes[attribute.id] : undefined}
                 key={attribute.id}
               />
             ))}
