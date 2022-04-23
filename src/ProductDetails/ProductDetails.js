@@ -41,10 +41,10 @@ class ProductDetails extends Component {
 
   onChangeImage = (img) => this.setState({ image: img });
 
-  onSetAttr = (attr, value) => {
-    const attributes = { ...this.state.attributes };
-    attributes[attr] = value;
-    this.setState({ attributes });
+  onSetAttr = (key) => (value) => {
+    const newValue = {};
+    newValue[key] = value;
+    this.setState({ attributes: { ...this.state.attributes, ...newValue } });
   };
 
   onAddToCart = () => {
@@ -89,7 +89,7 @@ class ProductDetails extends Component {
                   {product.attributes.map((attribute) => (
                     <AttributeSelect
                       attr={attribute}
-                      onChange={this.onSetAttr}
+                      onChange={this.onSetAttr(attribute.id)}
                       value={this.state.attributes[attribute.id]}
                       className="attribute"
                       key={attribute.id}

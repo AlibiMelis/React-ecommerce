@@ -15,7 +15,7 @@ class AttributeSelect extends Component {
               {items.map((item) => (
                 <div
                   className={"option text-option" + (value === item.id ? " text-selected" : "")}
-                  onClick={() => onChange(attr.id, item.id)}
+                  onClick={() => onChange(item.id)}
                   key={item.id}
                 >
                   {item.value}
@@ -29,7 +29,7 @@ class AttributeSelect extends Component {
               {items.map((item) => (
                 <div
                   className={"option color-option" + (value === item.id ? " color-selected" : "")}
-                  onClick={() => onChange(attr.id, item.id)}
+                  onClick={() => onChange(item.id)}
                   style={{ background: item.value }}
                   key={item.id}
                 ></div>

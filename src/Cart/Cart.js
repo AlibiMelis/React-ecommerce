@@ -10,19 +10,19 @@ const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
 });
 const mapDispatchToProps = (dispatch) => ({
-  onIncrement: (item) => () => dispatch(incrementItemCount(item)),
-  onDecrement: (item) => () => dispatch(decrementItemCount(item)),
-  onSetAttr: (item) => (attr, value) => dispatch(setItemAttribute(item, attr, value)),
-  onRemoveFromCart: (item) => dispatch(removeFromCart(item)),
+  onIncrement: (itemId) => () => dispatch(incrementItemCount(itemId)),
+  onDecrement: (itemId) => () => dispatch(decrementItemCount(itemId)),
+  onSetAttr: (item) => (newValue) => dispatch(setItemAttribute(item, newValue)),
+  onRemoveFromCart: (itemId) => dispatch(removeFromCart(itemId)),
 });
 
 class Cart extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
-  
-  removeItemFromCart = (item) => () => {
-    this.props.onRemoveFromCart(item);
+
+  removeItemFromCart = (itemId) => () => {
+    this.props.onRemoveFromCart(itemId);
     toast.success("Item is removed from your cart");
   };
 
@@ -38,11 +38,11 @@ class Cart extends Component {
             items.map((item, ind) => (
               <CartItem
                 item={item}
-                onSetAttr={onSetAttr(item)}
+                onSetAttr={onSetAttr(item.id)}
                 currency={currency}
-                inc={onIncrement(item)}
-                dec={onDecrement(item)}
-                onRemoveFromCart={this.removeItemFromCart(item)}
+                inc={onIncrement(item.id)}
+                dec={onDecrement(item.id)}
+                onRemoveFromCart={this.removeItemFromCart(item.id)}
                 key={ind}
               />
             ))

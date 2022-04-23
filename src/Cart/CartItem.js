@@ -22,8 +22,14 @@ export class CartItem extends Component {
     this.setState({ image: nextInd });
   };
 
+  onSetAttr = (key) => (value) => {
+    const newValue = {};
+    newValue[key] = value;
+    this.props.onSetAttr(newValue);
+  }
+
   render() {
-    const { item, currency, inc, dec, onRemoveFromCart, onSetAttr } = this.props;
+    const { item, currency, inc, dec, onRemoveFromCart } = this.props;
     const price = findProductPrice(item.product, currency);
     return (
       <div className="cart-item">
@@ -36,8 +42,8 @@ export class CartItem extends Component {
               <AttributeSelect
                 className="attribute"
                 attr={attribute}
-                onChange={onSetAttr}
-                value={item.attributes ? item.attributes[attribute.id] : undefined}
+                onChange={this.onSetAttr(attribute.id)}
+                value={item.attributes[attribute.id]}
                 key={attribute.id}
               />
             ))}

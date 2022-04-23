@@ -3,7 +3,7 @@ import lodash from "lodash";
 
 const initialProductsState = {
   products: [],
-  isPending: true,
+  isPending: false,
 };
 
 export const requestProducts = (state = initialProductsState, action = {}) => {
@@ -49,47 +49,42 @@ const compareItems = (a, b) => {
 export const changeCart = (state = initialCartState, action = {}) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
-      const itemToAdd = state.items.find((i) => compareItems(i, action.payload));
-      if (!itemToAdd) {
+      const similarItem = state.items.find((i) => compareItems(i, action.payload));
+      if (!similarItem) {
         return {
           ...state,
-          items: [...state.items, { ...action.payload, qty: 1 }],
+          items: [...state.items, { ...action.payload, id: Date.now(), qty: 1 }],
         };
       }
       return {
         ...state,
-        items: state.items.map((i) => (compareItems(i, action.payload) ? { ...i, qty: i.qty + 1 } : i)),
+        items: state.items.map((i) => (i.id === similarItem.id ? { ...i, qty: i.qty + 1 } : i)),
       };
     case actionTypes.REMOVE_FROM_CART:
       return {
         ...state,
-        items: state.items.filter((i) => !compareItems(i, action.payload)),
+        items: state.items.filter((i) => i.id !== action.payload),
       };
 
     case actionTypes.INCREMENT_ITEM_COUNT:
-      const itemToInc = state.items.find((i) => lodash.isEqual(i, action.payload));
-      if (!itemToInc) return state;
       return {
         ...state,
-        items: state.items.map((i) => (lodash.isEqual(i, action.payload) ? { ...i, qty: i.qty + 1 } : i)),
+        items: state.items.map((i) => (i.id === action.payload ? { ...i, qty: i.qty + 1 } : i)),
       };
 
     case actionTypes.DECREMENT_ITEM_COUNT:
-      const itemToDec = state.items.find((i) => lodash.isEqual(i, action.payload));
-      if (!itemToDec || itemToDec.qty < 2) return state;
+      if (state.items.find((i) => i.id === action.payload)?.qty === 1) return state;
       return {
         ...state,
-        items: state.items.map((i) => (lodash.isEqual(i, action.payload) ? { ...i, qty: i.qty - 1 } : i)),
+        items: state.items.map((i) => (i.id === action.payload ? { ...i, qty: i.qty - 1 } : i)),
       };
 
     case actionTypes.SET_ITEM_ATTRIBUTE:
-      const itemToSet = state.items.find((i) => lodash.isEqual(i, action.payload.item));
-      if (!itemToSet) return state;
-      const attr = { ...itemToSet.attributes };
-      attr[action.payload.attr] = action.payload.value;
       return {
         ...state,
-        items: state.items.map((i) => (lodash.isEqual(i, action.payload.item) ? { ...i, attributes: attr } : i)),
+        items: state.items.map((i) =>
+          i.id === action.payload.itemId ? { ...i, attributes: { ...i.attributes, ...action.payload.newValue } } : i
+        ),
       };
 
     default:

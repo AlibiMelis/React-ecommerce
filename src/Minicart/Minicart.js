@@ -13,9 +13,9 @@ const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
 });
 const mapDispatchToProps = (dispatch) => ({
-  onIncrement: (item) => () => dispatch(incrementItemCount(item)),
-  onDecrement: (item) => () => dispatch(decrementItemCount(item)),
-  onSetAttr: (item, attr, value) => dispatch(setItemAttribute(item, attr, value)),
+  onIncrement: (itemId) => () => dispatch(incrementItemCount(itemId)),
+  onDecrement: (itemId) => () => dispatch(decrementItemCount(itemId)),
+  onSetAttr: (itemId, newValue) => dispatch(setItemAttribute(itemId, newValue)),
 });
 
 class Minicart extends Component {
@@ -65,8 +65,8 @@ class Minicart extends Component {
                   item={item}
                   currency={currency}
                   key={ind}
-                  inc={onIncrement(item)}
-                  dec={onDecrement(item)}
+                  inc={onIncrement(item.id)}
+                  dec={onDecrement(item.id)}
                   onSetAttr={onSetAttr}
                 />
               ))}
