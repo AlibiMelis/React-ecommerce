@@ -28,12 +28,18 @@
 
 .minicart {
   position: absolute;
-  top: var(--nav-height);
   right: 5rem;
   background: var(--background-color);
   width: 325px;
   padding: 1rem;
   font-size: 1rem;
+}
+
+.minicart-bg {
+  position: fixed;
+  inset: 0;
+  top: var(--nav-height);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .minicart .items {

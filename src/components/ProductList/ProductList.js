@@ -1,37 +1,33 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ProductCard from "./ProductCard";
-import { addToCart, requestProducts } from "../../redux/actions";
-import { getProduct } from "../../api/apolloClient";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { addToCart, requestProducts } from "../../redux/actions";
+import { getProduct } from "../../api/apollo";
 
-import { ReactComponent as CartIcon } from "../../assets/white-cart.svg";
-
-import "./ProductList.css";
+import ProductCard from "./ProductCard";
 import Loader from "../Loader/Loader";
+import { ReactComponent as CartIcon } from "../../assets/white-cart.svg";
+import "./ProductList.css";
 
 const mapStateToProps = (state) => ({
-  isPending: state.requestProducts.isPending,
-  products: state.requestProducts.products,
-  currency: state.changeCurrency.currency,
+  isPending: state.shop.isPending,
+  products: state.shop.products,
+  currency: state.currency.value,
 });
-const mapDispatchToProps = (dispatch) => ({
-  onRequestProducts: (category) => dispatch(requestProducts(category)),
-  addToCart: (product, attributes) => dispatch(addToCart({ product, attributes })),
-});
+const mapDispatchToProps = { requestProducts, addToCart };
 
 class ProductList extends Component {
   componentDidMount() {
     const { category } = this.props.match.params;
-    this.props.onRequestProducts(category);
+    this.props.requestProducts(category);
     window.scrollTo(0, 0);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       const { category } = this.props.match.params;
-      this.props.onRequestProducts(category);
+      this.props.requestProducts(category);
       window.scrollTo(0, 0);
     }
   }
@@ -56,27 +52,25 @@ class ProductList extends Component {
 
     return (
       <main>
+        <Toaster position="bottom-right" />
+        <div className="header category-header">{category}</div>
         {!isPending ? (
-          <>
-            <Toaster position="bottom-right" />
-            <div className="header category-header">{category}</div>
-            <div className="product-list">
-              {products.map((product) => (
-                <div className="product" key={product.id}>
-                  <Link to={`/shop/${product.category}/${product.id}`} className="link">
-                    <ProductCard product={product} currency={currency} />
-                  </Link>
-                  {product.inStock && (
-                    <div className="add-to-cart" onClick={() => this.onAddToCart(product.id)}>
-                      <CartIcon />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </>
+          <div className="product-list">
+            {products.map((product) => (
+              <div className="product" key={product.id}>
+                <Link to={`/shop/${product.category}/${product.id}`} className="link">
+                  <ProductCard product={product} currency={currency} />
+                </Link>
+                {product.inStock && (
+                  <div className="add-to-cart" onClick={() => this.onAddToCart(product.id)}>
+                    <CartIcon />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         ) : (
-          <Loader show />
+          <Loader center />
         )}
       </main>
     );

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-export class Loader extends Component {
+class Loader extends Component {
   render() {
-    return this.props.show ? <div className="loader"></div> : null;
+    return <div className={"loader" + (this.props.center ? " center" : "")}></div>;
   }
 }
 

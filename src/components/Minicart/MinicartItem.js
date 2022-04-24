@@ -4,10 +4,10 @@ import AttributeSelect from "../AttributeSelect/AttributeSelect";
 import "./MinicartItem.css";
 
 class MinicartItem extends Component {
-  onSetAttr = (key) => (value) => {
-    const newValue = {};
-    newValue[key] = value;
-    this.props.onSetAttr(this.props.item.id, newValue);
+  onSetAttr = (attr, value) => {
+    const newAttr = {};
+    newAttr[attr] = value;
+    this.props.onSetAttr(newAttr);
   };
 
   render() {
@@ -24,8 +24,8 @@ class MinicartItem extends Component {
               condensed
               className="attributes"
               attr={attribute}
-              onChange={this.onSetAttr(attribute.id)}
               value={item.attributes[attribute.id]}
+              onChange={(value) => this.onSetAttr(attribute.id, value)}
               key={attribute.id}
             />
           ))}

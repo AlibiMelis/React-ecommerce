@@ -1,12 +1,12 @@
 import * as actionTypes from "./actionTypes";
 import lodash from "lodash";
 
-const initialProductsState = {
+const initialShopState = {
   products: [],
   isPending: false,
 };
 
-export const requestProducts = (state = initialProductsState, action = {}) => {
+export const shop = (state = initialShopState, action = {}) => {
   switch (action.type) {
     case actionTypes.REQUEST_PRODUCTS_PENDING:
       return { ...state, isPending: true };
@@ -23,30 +23,23 @@ export const requestProducts = (state = initialProductsState, action = {}) => {
   }
 };
 
-const initialCurrencyState = {
-  currency: null,
-};
-
-export const changeCurrency = (state = initialCurrencyState, action = {}) => {
+const initialCurrencyState = { value: null };
+export const currency = (state = initialCurrencyState, action = {}) => {
   switch (action.type) {
     case actionTypes.SET_CURRENCY:
-      return { ...state, currency: action.payload };
+      return { ...state, value: action.payload };
     default:
       return state;
   }
 };
 
-const initialCartState = {
-  items: [],
-};
-
+const initialCartState = { items: [] };
 const compareItems = (a, b) => {
   const sameProduct = a.product.id === b.product.id;
   const sameAttr = lodash.isEqual(a.attributes, b.attributes);
   return sameProduct && sameAttr;
 };
-
-export const changeCart = (state = initialCartState, action = {}) => {
+export const cart = (state = initialCartState, action = {}) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
       const similarItem = state.items.find((i) => compareItems(i, action.payload));

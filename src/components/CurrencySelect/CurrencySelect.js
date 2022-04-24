@@ -8,6 +8,14 @@ class CurrencySelect extends Component {
     this.selectRef = createRef();
   }
 
+  toggle = () => {
+    if (!this.state.open) {
+      document.addEventListener("mousedown", this.onOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", this.onOutsideClick);
+    }
+    this.setState({ open: !this.state.open });
+  };
   onOutsideClick = (event) => {
     if (!this.selectRef.current?.contains(event.target)) {
       this.toggle();
@@ -18,18 +26,8 @@ class CurrencySelect extends Component {
     document.removeEventListener("mousedown", this.onOutsideClick);
   }
 
-  toggle = () => {
-    if (!this.state.open) {
-      document.addEventListener("mousedown", this.onOutsideClick);
-    } else {
-      document.removeEventListener("mousedown", this.onOutsideClick);
-    }
-    this.setState({ open: !this.state.open });
-  };
-
   onSelect = (newValue) => {
-    const { onChange } = this.props;
-    onChange(newValue);
+    this.props.onChange(newValue);
     this.toggle();
   };
 

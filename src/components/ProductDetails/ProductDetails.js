@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getProduct } from "../../api/apolloClient";
+import { getProduct } from "../../api/apollo";
 import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions";
 import { findProductPrice, priceToString } from "../../utils/price";
@@ -10,11 +10,9 @@ import Loader from "../Loader/Loader";
 import "./ProductDetails.css";
 
 const mapStateToProps = (state) => ({
-  currency: state.changeCurrency.currency,
+  currency: state.currency.value,
 });
-const mapDispatchToProps = (dispatch) => ({
-  addToCart: (product, attributes) => dispatch(addToCart({ product, attributes: { ...attributes } })),
-});
+const mapDispatchToProps = { addToCart };
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -45,23 +43,21 @@ class ProductDetails extends Component {
   }
 
   onChangeImage = (img) => this.setState({ image: img });
-
-  onSetAttr = (key) => (value) => {
-    const newValue = {};
-    newValue[key] = value;
-    this.setState({ attributes: { ...this.state.attributes, ...newValue } });
+  onSetAttr = (attr, value) => {
+    const newAttr = {};
+    newAttr[attr] = value;
+    this.setState({ attributes: { ...this.state.attributes, ...newAttr } });
   };
-
   onAddToCart = () => {
     const { product, attributes } = this.state;
-    let complete = true;
+    let allSelected = true;
     for (const attr of product.attributes) {
       if (!attributes[attr.id]) {
         toast.error(`Please, select ${attr.name}`);
-        complete = false;
+        allSelected = false;
       }
     }
-    if (!complete) return;
+    if (!allSelected) return;
 
     this.props.addToCart(product, attributes);
     toast.success("Added to your cart");
@@ -94,8 +90,8 @@ class ProductDetails extends Component {
                   {product.attributes.map((attribute) => (
                     <AttributeSelect
                       attr={attribute}
-                      onChange={this.onSetAttr(attribute.id)}
                       value={this.state.attributes[attribute.id]}
+                      onChange={(value) => this.onSetAttr(attribute.id, value)}
                       className="attribute"
                       key={attribute.id}
                     />
@@ -119,7 +115,7 @@ class ProductDetails extends Component {
             <div>Sorry, product not found</div>
           )
         ) : (
-          <Loader show />
+          <Loader center />
         )}
       </main>
     );

@@ -1,4 +1,4 @@
-import { getProducts } from "../api/apolloClient";
+import { getProducts } from "../api/apollo";
 import * as actionTypes from "./actionTypes";
 
 // Request Products
@@ -16,9 +16,9 @@ export const setCurrency = (currency) => ({
 });
 
 // Manipulate Cart
-export const addToCart = (item) => ({
+export const addToCart = (product, attributes) => ({
   type: actionTypes.ADD_TO_CART,
-  payload: item,
+  payload: { product, attributes: { ...attributes } },
 });
 
 export const incrementItemCount = (itemId) => ({

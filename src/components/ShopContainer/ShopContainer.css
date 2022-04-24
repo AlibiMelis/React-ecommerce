@@ -5,8 +5,3 @@
 
   transition: filter 200ms ease-in;
 }
-
-.shop-container.inactive {
-  filter: brightness(0.6);
-  pointer-events: none;
-}

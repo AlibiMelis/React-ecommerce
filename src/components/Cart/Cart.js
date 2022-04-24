@@ -6,8 +6,8 @@ import toast, { Toaster } from "react-hot-toast";
 import "./Cart.css";
 
 const mapStateToProps = (state) => ({
-  items: state.changeCart.items,
-  currency: state.changeCurrency.currency,
+  items: state.cart.items,
+  currency: state.currency.value,
 });
 const mapDispatchToProps = (dispatch) => ({
   onIncrement: (itemId) => () => dispatch(incrementItemCount(itemId)),
