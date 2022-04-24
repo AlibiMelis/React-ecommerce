@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { decrementItemCount, incrementItemCount, removeFromCart, setItemAttribute } from "../redux/actions";
+import { decrementItemCount, incrementItemCount, removeFromCart, setItemAttribute } from "../../redux/actions";
 import CartItem from "./CartItem";
 import toast, { Toaster } from "react-hot-toast";
 import "./Cart.css";

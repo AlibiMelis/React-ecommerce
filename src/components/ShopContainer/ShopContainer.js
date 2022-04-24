@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { setCurrency } from "../redux/actions";
-import { getCategories, getCurrencies } from "../lib/apolloClient";
+import { setCurrency } from "../../redux/actions";
+import { getCategories, getCurrencies } from "../../api/apolloClient";
 
 import Navbar from "../Navbar/Navbar";
 import ProductList from "../ProductList/ProductList";

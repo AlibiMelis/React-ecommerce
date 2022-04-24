@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import Minicart from "../Minicart/Minicart";
-import { ReactComponent as LogoIcon } from "../assets/a-logo.svg";
-import { setCurrency } from "../redux/actions";
+import { ReactComponent as LogoIcon } from "../../assets/a-logo.svg";
+import { setCurrency } from "../../redux/actions";
 import { connect } from "react-redux";
 import "./Navbar.css";
 import CurrencySelect from "../CurrencySelect/CurrencySelect";

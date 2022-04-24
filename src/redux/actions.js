@@ -1,4 +1,4 @@
-import { getProducts } from "../lib/apolloClient";
+import { getProducts } from "../api/apolloClient";
 import * as actionTypes from "./actionTypes";
 
 // Request Products

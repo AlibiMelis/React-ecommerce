@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { getProduct } from "../lib/apolloClient";
+import { getProduct } from "../../api/apolloClient";
 import { connect } from "react-redux";
-import { addToCart } from "../redux/actions";
-import { findProductPrice, priceToString } from "../lib/utils";
+import { addToCart } from "../../redux/actions";
+import { findProductPrice, priceToString } from "../../utils/price";
 
 import toast, { Toaster } from "react-hot-toast";
 import AttributeSelect from "../AttributeSelect/AttributeSelect";
-import Loader from "../SharedComponents/Loader";
+import Loader from "../Loader/Loader";
 import "./ProductDetails.css";
 
 const mapStateToProps = (state) => ({

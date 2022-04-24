@@ -44,7 +44,6 @@
   color: var(--accent-color);
   font-weight: 600;
   border-bottom: var(--border-size) solid var(--accent-color);
-  cursor: default;
 }
 .category.unselected::before {
   content: '';

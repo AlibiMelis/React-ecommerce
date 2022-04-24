@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { requestProducts } from "../redux/actions";
 import { connect } from "react-redux";
-import ProductCard from "../ProductCard/ProductCard";
-import { addToCart } from "../redux/actions";
-import { getProduct } from "../lib/apolloClient";
+import ProductCard from "./ProductCard";
+import { addToCart, requestProducts } from "../../redux/actions";
+import { getProduct } from "../../api/apolloClient";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as CartIcon } from "../assets/white-cart.svg";
+import { ReactComponent as CartIcon } from "../../assets/white-cart.svg";
 
 import "./ProductList.css";
-import Loader from "../SharedComponents/Loader";
+import Loader from "../Loader/Loader";
 
 const mapStateToProps = (state) => ({
   isPending: state.requestProducts.isPending,

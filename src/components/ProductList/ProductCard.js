@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { findProductPrice, priceToString } from "../lib/utils";
+import { findProductPrice, priceToString } from "../../utils/price";
 import "./ProductCard.css";
 
 class ProductCard extends Component {
