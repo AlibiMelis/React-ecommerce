@@ -26,19 +26,20 @@ export class CartItem extends Component {
     const newValue = {};
     newValue[key] = value;
     this.props.onSetAttr(newValue);
-  }
+  };
 
   render() {
     const { item, currency, inc, dec, onRemoveFromCart } = this.props;
+    const { brand, name, gallery, attributes } = item.product;
     const price = findProductPrice(item.product, currency);
     return (
       <div className="cart-item">
         <div className="details">
-          <div className="brand">{item.product.brand}</div>
-          <div className="name">{item.product.name}</div>
+          <div className="brand">{brand}</div>
+          <div className="name">{name}</div>
           <div className="price-tag">{priceToString(price)}</div>
           <div>
-            {item.product.attributes.map((attribute) => (
+            {attributes.map((attribute) => (
               <AttributeSelect
                 className="attribute"
                 attr={attribute}
@@ -55,17 +56,15 @@ export class CartItem extends Component {
           <button onClick={dec}>-</button>
         </div>
         <div className="cart-gallery">
-          <img src={item.product.gallery[this.state.image]} alt={item.product.name} />
+          <img src={gallery[this.state.image]} alt={name} />
           <div className="cart-gallery-controls">
-            <div className="btn" onClick={this.onPrevImage}>
-              <div className="arrow left"></div>
-            </div>
-            <div className="btn" onClick={this.onNextImage}>
-              <div className="arrow right"></div>
-            </div>
+            <div className="btn-arrow left" onClick={this.onPrevImage}></div>
+            <div className="btn-arrow right" onClick={this.onNextImage}></div>
           </div>
         </div>
-        <div className="delete-item" onClick={onRemoveFromCart}><div className="cross">&times;</div></div>
+        <div className="delete-item" onClick={onRemoveFromCart}>
+          <div className="cross">&times;</div>
+        </div>
       </div>
     );
   }

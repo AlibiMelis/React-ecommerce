@@ -12,7 +12,7 @@ import "./ShopContainer.css";
 
 const mapStateToProps = (state) => ({
   currency: state.changeCurrency.currency,
-})
+});
 const mapDispatchToProps = (dispatch) => ({
   onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
 });
@@ -25,14 +25,18 @@ class ShopContainer extends Component {
 
   componentDidMount() {
     const loadData = async () => {
-      const { categories } = await getCategories();
-      const { currencies } = await getCurrencies();
+      try {
+        const { categories } = await getCategories();
+        const { currencies } = await getCurrencies();
 
-      if (!this.props.currency) this.props.onCurrencyChange(currencies[0].symbol);
-      this.setState({ currencies, categories });
+        if (!this.props.currency) this.props.onCurrencyChange(currencies[0].symbol);
+        this.setState({ currencies, categories });
 
-      if (window.location.pathname === "/shop" && categories.length) {
-        window.location.href += "/" + categories[0].name; // TODO: changing href doesn't seem right
+        if (window.location.pathname === "/shop" && categories.length) {
+          window.location.href += "/" + categories[0].name; // TODO: changing href doesn't seem right
+        }
+      } catch (e) {
+        console.log(e);
       }
     };
 

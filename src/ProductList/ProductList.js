@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { requestProducts } from "../redux/actions";
 import { connect } from "react-redux";
-import ProductCard from "./ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
 import { addToCart } from "../redux/actions";
 import { getProduct } from "../lib/apolloClient";
 import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
+
+import { ReactComponent as CartIcon } from "../assets/white-cart.svg";
 
 import "./ProductList.css";
 import Loader from "../SharedComponents/Loader";
@@ -12,6 +15,7 @@ import Loader from "../SharedComponents/Loader";
 const mapStateToProps = (state) => ({
   isPending: state.requestProducts.isPending,
   products: state.requestProducts.products,
+  currency: state.changeCurrency.currency,
 });
 const mapDispatchToProps = (dispatch) => ({
   onRequestProducts: (category) => dispatch(requestProducts(category)),
@@ -34,17 +38,21 @@ class ProductList extends Component {
   }
 
   onAddToCart = async (id) => {
-    const { product } = await getProduct(id);
-    const attributes = product.attributes.reduce((acc, attr) => {
-      acc[attr.id] = attr.items[0].id;
-      return acc;
-    }, {});
-    this.props.addToCart(product, attributes);
-    toast.success("Added to your cart");
+    try {
+      const { product } = await getProduct(id);
+      const attributes = product.attributes.reduce((acc, attr) => {
+        acc[attr.id] = attr.items[0].id;
+        return acc;
+      }, {});
+      this.props.addToCart(product, attributes);
+      toast.success("Added to your cart");
+    } catch (e) {
+      toast.error("Couldn't add this item to cart");
+    }
   };
 
   render() {
-    const { products, isPending } = this.props;
+    const { products, isPending, currency } = this.props;
     const { category } = this.props.match.params;
 
     return (
@@ -55,7 +63,16 @@ class ProductList extends Component {
             <div className="header category-header">{category}</div>
             <div className="product-list">
               {products.map((product) => (
-                <ProductCard product={product} onAddToCart={() => this.onAddToCart(product.id)} key={product.id} />
+                <div className="product" key={product.id}>
+                  <Link to={`/shop/${product.category}/${product.id}`} className="link">
+                    <ProductCard product={product} currency={currency} />
+                  </Link>
+                  {product.inStock && (
+                    <div className="add-to-cart" onClick={() => this.onAddToCart(product.id)}>
+                      <CartIcon />
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </>

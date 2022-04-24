@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onIncrement: (itemId) => () => dispatch(incrementItemCount(itemId)),
   onDecrement: (itemId) => () => dispatch(decrementItemCount(itemId)),
-  onSetAttr: (item) => (newValue) => dispatch(setItemAttribute(item, newValue)),
+  onSetAttr: (itemId) => (newValue) => dispatch(setItemAttribute(itemId, newValue)),
   onRemoveFromCart: (itemId) => dispatch(removeFromCart(itemId)),
 });
 

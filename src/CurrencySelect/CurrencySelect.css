@@ -30,8 +30,7 @@
 }
 .cur-select .option:hover {
   cursor: pointer;
-  background-color: #EEE;
-
+  background-color: #eee;
   transition: background-color 300ms;
 }
 

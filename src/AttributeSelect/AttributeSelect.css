@@ -62,16 +62,19 @@
   position: absolute;
   width: var(--picker-size);
   height: var(--picker-size);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: var(--accent-color);
+  background: white;
   border: 1px solid var(--text-color);
   color: white;
   font-size: 1rem;
+}
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.option.color-selected::after {
+  content: '';
+  position: absolute;
+  width: calc(var(--picker-size) / 4);
+  height: calc(var(--picker-size) / 2);
+  border: solid var(--text-color);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-1px) rotate(45deg);
 }

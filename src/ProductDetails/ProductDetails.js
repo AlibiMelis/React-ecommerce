@@ -29,11 +29,16 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const loadDetails = async (id) => {
-      this.setState({ loading: true });
-      const { product } = await getProduct(id);
-      if (!product) return this.setState({ loading: false });
-      this.setState({ product, image: product.gallery[0], loading: false });
-      window.scrollTo(0, 0); // TODO: using scrollTo
+      try {
+        this.setState({ loading: true });
+        const { product } = await getProduct(id);
+        this.setState({ product, image: product.gallery[0], loading: false });
+        window.scrollTo(0, 0); // TODO: using scrollTo
+      } catch (e) {
+        console.log(e);
+      } finally {
+        this.setState({ loading: false });
+      }
     };
 
     loadDetails(this.props.match.params.id);
