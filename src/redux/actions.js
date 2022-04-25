@@ -31,9 +31,9 @@ export const decrementItemCount = (itemId) => ({
   payload: itemId,
 });
 
-export const setItemAttribute = (itemId, newValue) => ({
+export const setItemAttribute = (itemId, attributes) => ({
   type: actionTypes.SET_ITEM_ATTRIBUTE,
-  payload: { itemId, newValue },
+  payload: { itemId, attributes },
 });
 
 export const removeFromCart = (itemId) => ({

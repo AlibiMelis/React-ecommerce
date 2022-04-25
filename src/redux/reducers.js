@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import lodash from "lodash";
 
+// SHOP REDUCER
 const initialShopState = {
   products: [],
   isPending: false,
@@ -23,7 +24,9 @@ export const shop = (state = initialShopState, action = {}) => {
   }
 };
 
+// CURRENCY REDUCER
 const initialCurrencyState = { value: null };
+
 export const currency = (state = initialCurrencyState, action = {}) => {
   switch (action.type) {
     case actionTypes.SET_CURRENCY:
@@ -33,12 +36,14 @@ export const currency = (state = initialCurrencyState, action = {}) => {
   }
 };
 
+// CART REDUCER
 const initialCartState = { items: [] };
 const compareItems = (a, b) => {
   const sameProduct = a.product.id === b.product.id;
   const sameAttr = lodash.isEqual(a.attributes, b.attributes);
   return sameProduct && sameAttr;
 };
+
 export const cart = (state = initialCartState, action = {}) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
@@ -76,7 +81,7 @@ export const cart = (state = initialCartState, action = {}) => {
       return {
         ...state,
         items: state.items.map((i) =>
-          i.id === action.payload.itemId ? { ...i, attributes: { ...i.attributes, ...action.payload.newValue } } : i
+          i.id === action.payload.itemId ? { ...i, attributes: { ...i.attributes, ...action.payload.attributes } } : i
         ),
       };
 
