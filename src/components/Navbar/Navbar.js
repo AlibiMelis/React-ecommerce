@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-
 import { setCurrency } from "../../redux/actions";
 import Minicart from "../Minicart/Minicart";
 import CurrencySelect from "../CurrencySelect/CurrencySelect";

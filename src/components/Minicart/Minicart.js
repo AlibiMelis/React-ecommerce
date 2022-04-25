@@ -1,10 +1,9 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
-import MinicartItem from "./MinicartItem";
 import { decrementItemCount, incrementItemCount, setItemAttribute } from "../../redux/actions";
 import { calculateProductsTotal } from "../../utils/price";
+import MinicartItem from "./MinicartItem";
 import { ReactComponent as CartIcon } from "../../assets/cart.svg";
 import "./Minicart.css";
 

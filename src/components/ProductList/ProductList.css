@@ -35,7 +35,7 @@
   cursor: pointer;
   position: absolute;
   bottom: 74px;
-  right: 2rem; /* TODO: how to position the button properly */
+  right: 2rem; 
   display: var(--btn-display);
   justify-content: center;
   align-items: center;

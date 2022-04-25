@@ -17,7 +17,7 @@
 }
 .product-gallery img:hover,
 .product-gallery img:focus {
-  box-shadow: 0 0 16px #a8acb0; /* 19% opacity */
+  box-shadow: 0 0 16px var(--shadow-color); 
   transition: box-shadow 300ms ease-in-out;
 }
 

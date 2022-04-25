@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { getProduct } from "../../api/apollo";
 import { connect } from "react-redux";
-import { addToCart } from "../../redux/actions";
-import { findProductPrice, priceToString } from "../../utils/price";
-
 import toast, { Toaster } from "react-hot-toast";
+import { addToCart } from "../../redux/actions";
+import { getProduct } from "../../api/apollo";
+import { findProductPrice, priceToString } from "../../utils/price";
 import AttributeSelect from "../AttributeSelect/AttributeSelect";
 import Loader from "../Loader/Loader";
 import "./ProductDetails.css";
@@ -31,7 +30,7 @@ class ProductDetails extends Component {
         this.setState({ loading: true });
         const { product } = await getProduct(id);
         this.setState({ product, image: product.gallery[0], loading: false });
-        window.scrollTo(0, 0); // TODO: using scrollTo
+        window.scrollTo(0, 0);
       } catch (e) {
         console.log(e);
       } finally {

@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrency } from "../../redux/actions";
 import { getCategories, getCurrencies } from "../../api/apollo";
-
 import Navbar from "../Navbar/Navbar";
 import ProductList from "../ProductList/ProductList";
 import ProductDetails from "../ProductDetails/ProductDetails";

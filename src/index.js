@@ -4,32 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import thunkMiddleware from "redux-thunk";
-import { shop, currency, cart } from "./redux/reducers";
-import { createLogger } from "redux-logger";
-
-const rootReducer = combineReducers({ shop, currency, cart });
-
-let initialStore = {};
-try {
-  initialStore = sessionStorage.getItem("myApp") ? JSON.parse(sessionStorage.getItem("myApp")) : {};
-} catch (e) {
-  console.log('Session storage error', e);
-}
-const storeSaver = (store) => (next) => (action) => {
-  const nextResult = next(action);
-  const currentStore = store.getState();
-  sessionStorage.setItem("myApp", JSON.stringify({...currentStore}));
-  return nextResult;
-}
-
-const store = createStore(
-  rootReducer,
-  initialStore,
-  applyMiddleware(thunkMiddleware, createLogger(), storeSaver)
-);
+import { store } from "./redux/store";
 
 ReactDOM.render(
   <React.StrictMode>
