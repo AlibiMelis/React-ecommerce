@@ -69,10 +69,10 @@ class ProductDetails extends Component {
 
     return (
       <main className="left-aligned">
+        <Toaster position="bottom-right" />
         {!loading ? (
           product ? (
             <div className="product-container">
-              <Toaster position="bottom-right" />
               <div className="product-gallery">
                 {product.gallery.map((img, ind) => (
                   <img src={img} onClick={() => this.onChangeImage(img)} alt={product.name} key={`image${ind}`} />
@@ -104,7 +104,7 @@ class ProductDetails extends Component {
                 </div>
 
                 <div
-                  className={`add-to-cart ${product.inStock ? "active" : "inactive"}`}
+                  className={"add-to-cart" + (product.inStock ? " active" : " inactive")}
                   onClick={product.inStock ? this.onAddToCart : null}
                 ></div>
 

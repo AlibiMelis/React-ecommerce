@@ -3,7 +3,7 @@ import "./AttributeSelect.css";
 
 class AttributeSelect extends Component {
   render() {
-    const { attr, value, onChange, className = "", condensed = false } = this.props;
+    const { attr, value, onChange = () => {}, className = "", condensed = false } = this.props;
     const { name, type, items } = attr;
 
     return (

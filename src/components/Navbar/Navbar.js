@@ -9,13 +9,11 @@ import { ReactComponent as LogoIcon } from "../../assets/a-logo.svg";
 import "./Navbar.css";
 
 const mapStateToProps = (state) => ({ currency: state.currency.value });
-const mapDispatchToProps = (dispatch) => ({
-  onCurrencyChange: (currency) => dispatch(setCurrency(currency)),
-});
+const mapDispatchToProps = { setCurrency };
 
 class Navbar extends Component {
   render() {
-    const { categories, currencies, currency, onCurrencyChange } = this.props;
+    const { categories, currencies, currency, setCurrency } = this.props;
     return (
       <nav className="navbar-container">
         <div className="navbar">
@@ -36,7 +34,7 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="navbar-section controls">
-            <CurrencySelect options={currencies} value={currency} onChange={onCurrencyChange} />
+            <CurrencySelect options={currencies} value={currency} onChange={setCurrency} />
             <Minicart />
           </div>
         </div>

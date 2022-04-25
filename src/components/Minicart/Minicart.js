@@ -12,11 +12,7 @@ const mapStateToProps = (state) => ({
   items: state.cart.items,
   currency: state.currency.value,
 });
-const mapDispatchToProps = (dispatch) => ({
-  onIncrement: (itemId) => () => dispatch(incrementItemCount(itemId)),
-  onDecrement: (itemId) => () => dispatch(decrementItemCount(itemId)),
-  onSetAttr: (itemId, newValue) => dispatch(setItemAttribute(itemId, newValue)),
-});
+const mapDispatchToProps = { incrementItemCount, decrementItemCount, setItemAttribute };
 
 class Minicart extends Component {
   constructor(props) {
@@ -45,16 +41,16 @@ class Minicart extends Component {
 
   open = () => {
     document.addEventListener("mousedown", this.onOutsideClick);
-    this.setState({ open: true })
-  }
+    this.setState({ open: true });
+  };
 
   close = () => {
     document.removeEventListener("mousedown", this.onOutsideClick);
-    this.setState({ open: false })
-  }
+    this.setState({ open: false });
+  };
 
   render() {
-    const { items, currency, onIncrement, onDecrement, onSetAttr } = this.props;
+    const { items, currency, incrementItemCount, decrementItemCount, setItemAttribute } = this.props;
     const { open } = this.state;
     const total = calculateProductsTotal(items, currency).toFixed(2);
 
@@ -64,43 +60,41 @@ class Minicart extends Component {
           <CartIcon />
         </div>
         {open && (
-          <>
-            <div className="minicart-bg">
-              <div className="minicart" ref={this.minicartRef}>
-                <div>
-                  <span style={{ fontWeight: "bold" }}>My bag,</span>
-                  {` ${items.length} items.`}
-                </div>
+          <div className="minicart-bg">
+            <div className="minicart" ref={this.minicartRef}>
+              <div>
+                <span style={{ fontWeight: "bold" }}>My bag,</span>
+                {` ${items.length} items.`}
+              </div>
 
-                <div className="items">
-                  {this.props.items.map((item, ind) => (
-                    <MinicartItem
-                      item={item}
-                      currency={currency}
-                      key={ind}
-                      inc={onIncrement(item.id)}
-                      dec={onDecrement(item.id)}
-                      onSetAttr={(attr) => onSetAttr(item.id, attr)}
-                    />
-                  ))}
-                </div>
+              <div className="items">
+                {this.props.items.map((item) => (
+                  <MinicartItem
+                    item={item}
+                    currency={currency}
+                    onInc={() => incrementItemCount(item.id)}
+                    onDec={() => decrementItemCount(item.id)}
+                    onSetAttr={(attr) => setItemAttribute(item.id, attr)}
+                    key={item.id}
+                  />
+                ))}
+              </div>
 
-                <div className="total">
-                  <div>Total:</div>
-                  <div>{`${currency}${total}`}</div>
-                </div>
+              <div className="total">
+                <div>Total:</div>
+                <div>{currency}{total}</div>
+              </div>
 
-                <div className="minicart-buttons">
-                  <Link to="/shop/cart" className="link btn btn-secondary" onClick={this.close}>
-                    View bag
-                  </Link>
-                  <Link to="#" className="link btn btn-primary" onClick={this.close}>
-                    Check out
-                  </Link>
-                </div>
+              <div className="minicart-buttons">
+                <Link to="/shop/cart" className="link btn btn-secondary" onClick={this.close}>
+                  View bag
+                </Link>
+                <Link to="#" className="link btn btn-primary" onClick={this.close}>
+                  Check out
+                </Link>
               </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     );

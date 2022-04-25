@@ -6,6 +6,7 @@ class ProductCard extends Component {
   render() {
     const { product, currency } = this.props;
     const { name, gallery, brand, inStock } = product;
+    const price = findProductPrice(product, currency);
 
     return (
       <div className={"product-card" + (inStock ? " in-stock" : " out-of-stock")}>
@@ -14,7 +15,7 @@ class ProductCard extends Component {
         </div>
         <div className="label">
           <div className="name">{`${brand} ${name}`}</div>
-          <div>{priceToString(findProductPrice(product, currency))}</div>
+          <div>{priceToString(price)}</div>
         </div>
       </div>
     );

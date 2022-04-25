@@ -22,14 +22,14 @@ export class CartItem extends Component {
     this.setState({ image: nextInd });
   };
 
-  onSetAttr = (key) => (value) => {
-    const newValue = {};
-    newValue[key] = value;
-    this.props.onSetAttr(newValue);
+  onSetAttr = (attr, value) => {
+    const newAttr = {};
+    newAttr[attr] = value;
+    this.props.onSetAttr(newAttr);
   };
 
   render() {
-    const { item, currency, inc, dec, onRemoveFromCart } = this.props;
+    const { item, currency, onInc, onDec, onRemove } = this.props;
     const { brand, name, gallery, attributes } = item.product;
     const price = findProductPrice(item.product, currency);
     return (
@@ -43,7 +43,7 @@ export class CartItem extends Component {
               <AttributeSelect
                 className="attribute"
                 attr={attribute}
-                onChange={this.onSetAttr(attribute.id)}
+                onChange={(value) => this.onSetAttr(attribute.id, value)}
                 value={item.attributes[attribute.id]}
                 key={attribute.id}
               />
@@ -51,9 +51,9 @@ export class CartItem extends Component {
           </div>
         </div>
         <div className="cart-quantity-control">
-          <button onClick={inc}>+</button>
+          <button onClick={onInc}>+</button>
           {item.qty}
-          <button onClick={dec}>-</button>
+          <button onClick={onDec}>-</button>
         </div>
         <div className="cart-gallery">
           <img src={gallery[this.state.image]} alt={name} />
@@ -62,7 +62,7 @@ export class CartItem extends Component {
             <div className="btn-arrow right" onClick={this.onNextImage}></div>
           </div>
         </div>
-        <div className="delete-item" onClick={onRemoveFromCart}>
+        <div className="delete-item" onClick={onRemove}>
           <div className="cross">&times;</div>
         </div>
       </div>

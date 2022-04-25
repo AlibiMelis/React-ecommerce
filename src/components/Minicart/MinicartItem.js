@@ -11,7 +11,7 @@ class MinicartItem extends Component {
   };
 
   render() {
-    const { item, currency, inc, dec } = this.props;
+    const { item, currency, onInc, onDec } = this.props;
     const price = findProductPrice(item.product, currency);
     return (
       <div className="minicart-item">
@@ -31,9 +31,9 @@ class MinicartItem extends Component {
           ))}
         </div>
         <div className="quantity-control">
-          <button onClick={inc}>+</button>
+          <button onClick={onInc}>+</button>
           {item.qty}
-          <button onClick={dec}>-</button>
+          <button onClick={onDec}>-</button>
         </div>
         <div className="image">
           <img src={item.product.gallery[0]} alt={item.product.name} />
