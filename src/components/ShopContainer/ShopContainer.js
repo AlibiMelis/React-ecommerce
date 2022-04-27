@@ -40,7 +40,7 @@ class ShopContainer extends Component {
     return (
       <>
         <Navbar categories={categories} currencies={currencies} />
-        <div className={"shop-container"}>
+        <div className="shop-container">
           <Switch>
             <Route path="/shop/cart" component={Cart} />
             <Route path="/shop/:category/:id" component={ProductDetails} />

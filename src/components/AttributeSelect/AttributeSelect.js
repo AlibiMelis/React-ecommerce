@@ -8,7 +8,7 @@ class AttributeSelect extends Component {
 
     return (
       <div className={"attribute-container " + className + (condensed ? " condensed" : " normal")}>
-        {!condensed && <div className="attribute-name">{name + ":"}</div>}
+        <div className="attribute-name">{name + ":"}</div>
 
         {type === "text" && (
           <div className="attribute-options">

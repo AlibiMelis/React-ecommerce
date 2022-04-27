@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { findProductPrice, priceToString } from "../../utils/price";
 import AttributeSelect from "../AttributeSelect/AttributeSelect";
+import { DeleteButton } from "../shared";
 import "./MinicartItem.css";
 
 class MinicartItem extends Component {
@@ -11,7 +12,7 @@ class MinicartItem extends Component {
   };
 
   render() {
-    const { item, currency, onInc, onDec } = this.props;
+    const { item, currency, onInc, onDec, onRemove } = this.props;
     const price = findProductPrice(item.product, currency);
     return (
       <div className="minicart-item">
@@ -38,6 +39,7 @@ class MinicartItem extends Component {
         <div className="image">
           <img src={item.product.gallery[0]} alt={item.product.name} />
         </div>
+        <DeleteButton className="delete-item" onClick={onRemove} />
       </div>
     );
   }

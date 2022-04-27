@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { findProductPrice, priceToString } from "../../utils/price";
 import AttributeSelect from "../AttributeSelect/AttributeSelect";
+import { DeleteButton } from "../shared";
 import "./CartItem.css";
 
-export class CartItem extends Component {
+class CartItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,9 +63,7 @@ export class CartItem extends Component {
             <div className="btn-arrow right" onClick={this.onNextImage}></div>
           </div>
         </div>
-        <div className="delete-item" onClick={onRemove}>
-          <div className="cross">&times;</div>
-        </div>
+        <DeleteButton className="delete-item" onClick={onRemove}/>
       </div>
     );
   }

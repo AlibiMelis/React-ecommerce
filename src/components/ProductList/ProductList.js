@@ -6,7 +6,7 @@ import { addToCart, requestProducts } from "../../redux/actions";
 import { getProduct } from "../../api/apollo";
 
 import ProductCard from "./ProductCard";
-import Loader from "../Loader/Loader";
+import { Loader } from "../shared";
 import { ReactComponent as CartIcon } from "../../assets/white-cart.svg";
 import "./ProductList.css";
 

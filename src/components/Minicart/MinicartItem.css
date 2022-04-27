@@ -53,3 +53,9 @@
   height: var(--minicart-item-height);
   aspect-ratio: 3 / 4;
 }
+
+.minicart-item .delete-item {
+  width: 18px;
+  height: 18px;
+  font-size: 1.5rem;
+}

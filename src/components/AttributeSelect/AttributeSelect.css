@@ -1,31 +1,32 @@
 .attribute-container.normal {
+  font-size: 1.2rem;
   --option-width: 4rem;
   --option-height: 3rem;
   --picker-size: 1.2rem;
-  --margin: 6px;
+  --gap: 12px;
 }
 .attribute-container.condensed {
   font-size: .8rem;
   --option-width: 2.2rem;
   --option-height: 1.5rem;
   --picker-size: 0.7rem;
-  --margin: 3px;
+  --gap: 6px;
 }
 
 .attribute-name {
   font-weight: bold;
   font-family: 'Roboto Condensed';
-  font-size: 1.2rem;
   text-transform: uppercase;
 }
+
 
 .attribute-options {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--gap);
 }
 
 .attribute-options .option {
-  margin: var(--margin);
   width: var(--option-width);
   height: var(--option-height);
   border: 1px solid var(--text-color);
@@ -35,16 +36,13 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.attribute-options .option:first-child {
-  margin-left: 0px;
-}
 
 .text-option:hover {
   color: white;
   background-color: var(--text-color);
 }
 .color-option:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .option.text-selected {

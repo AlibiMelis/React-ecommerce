@@ -1,17 +1,23 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { decrementItemCount, incrementItemCount, setItemAttribute } from "../../redux/actions";
+import { decrementItemCount, incrementItemCount, setItemAttribute, removeFromCart } from "../../redux/actions";
 import { calculateProductsTotal } from "../../utils/price";
 import MinicartItem from "./MinicartItem";
 import { ReactComponent as CartIcon } from "../../assets/cart.svg";
 import "./Minicart.css";
+import toast from "react-hot-toast";
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
   currency: state.currency.value,
 });
-const mapDispatchToProps = { incrementItemCount, decrementItemCount, setItemAttribute };
+const mapDispatchToProps = {
+  incrementItemCount,
+  decrementItemCount,
+  setItemAttribute,
+  removeFromCart,
+};
 
 class Minicart extends Component {
   constructor(props) {
@@ -47,15 +53,20 @@ class Minicart extends Component {
     document.removeEventListener("mousedown", this.onOutsideClick);
     this.setState({ open: false });
   };
+  removeItemFromCart = (itemId) => {
+    this.props.removeFromCart(itemId);
+    toast.success("Item is removed from your cart");
+  };
 
   render() {
     const { items, currency, incrementItemCount, decrementItemCount, setItemAttribute } = this.props;
     const { open } = this.state;
-    const total = calculateProductsTotal(items, currency).toFixed(2);
+    const totalQty = items.reduce((acc, item) => acc + item.qty, 0);
+    const totalPrice = calculateProductsTotal(items, currency).toFixed(2);
 
     return (
       <div className="minicart-container">
-        <div className="minicart-icon" onClick={this.onMinicartClick} cart-counter={items.length} ref={this.buttonRef}>
+        <div className="minicart-icon" onClick={this.onMinicartClick} cart-counter={totalQty} ref={this.buttonRef}>
           <CartIcon />
         </div>
         {open && (
@@ -74,6 +85,7 @@ class Minicart extends Component {
                     onInc={() => incrementItemCount(item.id)}
                     onDec={() => decrementItemCount(item.id)}
                     onSetAttr={(attr) => setItemAttribute(item.id, attr)}
+                    onRemove={() => this.removeItemFromCart(item.id)}
                     key={item.id}
                   />
                 ))}
@@ -81,7 +93,10 @@ class Minicart extends Component {
 
               <div className="total">
                 <div>Total:</div>
-                <div>{currency}{total}</div>
+                <div>
+                  {currency}
+                  {totalPrice}
+                </div>
               </div>
 
               <div className="minicart-buttons">

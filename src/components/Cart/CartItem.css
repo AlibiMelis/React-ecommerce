@@ -61,6 +61,7 @@
   height: var(--cart-item-height);
   aspect-ratio: 3 / 4;
   position: relative;
+  margin-right: 12px;
 }
 .cart-gallery-controls {
   position: absolute;
@@ -106,24 +107,7 @@
 }
 
 .delete-item {
-  cursor: pointer;
   width: 36px;
   height: 36px;
   font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 12px;
-  background: white;
-  border-radius: 50%;
-  transition: all 300ms ease;
-}
-.delete-item .cross {
-  user-select: none;
-  transform: translateY(-2px);
-}
-
-.delete-item:hover {
-  background: red;
-  color: white;
 }

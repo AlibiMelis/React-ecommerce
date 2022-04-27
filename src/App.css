@@ -54,6 +54,25 @@ img {
   animation: loader-spin 1s infinite;
 }
 
+.btn-delete {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 50%;
+  transition: all 300ms ease;
+}
+.btn-delete::before {
+  content: '\00D7';
+  user-select: none;
+  transform: translateY(-2px);
+}
+.btn-delete:hover {
+  background: red;
+  color: white;
+}
+
 .center {
   position: absolute;
   top: 50%;

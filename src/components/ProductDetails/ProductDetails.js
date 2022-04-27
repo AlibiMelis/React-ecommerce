@@ -5,7 +5,7 @@ import { addToCart } from "../../redux/actions";
 import { getProduct } from "../../api/apollo";
 import { findProductPrice, priceToString } from "../../utils/price";
 import AttributeSelect from "../AttributeSelect/AttributeSelect";
-import Loader from "../Loader/Loader";
+import { Loader, Purify } from "../shared";
 import "./ProductDetails.css";
 
 const mapStateToProps = (state) => ({
@@ -65,7 +65,6 @@ class ProductDetails extends Component {
   render() {
     const { product, loading } = this.state;
     const { currency } = this.props;
-
     return (
       <main className="left-aligned">
         <Toaster position="bottom-right" />
@@ -107,7 +106,7 @@ class ProductDetails extends Component {
                   onClick={product.inStock ? this.onAddToCart : null}
                 ></div>
 
-                <div className="description" dangerouslySetInnerHTML={{ __html: product.description }} />
+                <Purify className="description" content={product.description} />
               </div>
             </div>
           ) : (
