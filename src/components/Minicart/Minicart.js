@@ -6,7 +6,6 @@ import { calculateProductsTotal } from "../../utils/price";
 import MinicartItem from "./MinicartItem";
 import { ReactComponent as CartIcon } from "../../assets/cart.svg";
 import "./Minicart.css";
-import toast from "react-hot-toast";
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
@@ -55,7 +54,7 @@ class Minicart extends Component {
   };
   removeItemFromCart = (itemId) => {
     this.props.removeFromCart(itemId);
-    toast.success("Item is removed from your cart");
+    // toast.success("Item is removed from your cart");
   };
 
   render() {

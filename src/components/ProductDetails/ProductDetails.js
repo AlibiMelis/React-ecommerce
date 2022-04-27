@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
 import { addToCart } from "../../redux/actions";
 import { getProduct } from "../../api/apollo";
 import { findProductPrice, priceToString } from "../../utils/price";
@@ -52,14 +51,14 @@ class ProductDetails extends Component {
     let allSelected = true;
     for (const attr of product.attributes) {
       if (!attributes[attr.id]) {
-        toast.error(`Please, select ${attr.name}`);
+        // toast.error(`Please, select ${attr.name}`);
         allSelected = false;
       }
     }
     if (!allSelected) return;
 
     this.props.addToCart(product, attributes);
-    toast.success("Added to your cart");
+    // toast.success("Added to your cart");
   };
 
   render() {
@@ -67,7 +66,6 @@ class ProductDetails extends Component {
     const { currency } = this.props;
     return (
       <main className="left-aligned">
-        <Toaster position="bottom-right" />
         {!loading ? (
           product ? (
             <div className="product-container">

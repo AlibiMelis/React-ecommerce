@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import toast, { Toaster } from "react-hot-toast";
 import { decrementItemCount, incrementItemCount, removeFromCart, setItemAttribute } from "../../redux/actions";
 import CartItem from "./CartItem";
 import "./Cart.css";
@@ -23,7 +22,7 @@ class Cart extends Component {
 
   removeItemFromCart = (itemId) => {
     this.props.removeFromCart(itemId);
-    toast.success("Item is removed from your cart");
+    // toast.success("Item is removed from your cart");
   };
 
   render() {
@@ -31,7 +30,6 @@ class Cart extends Component {
 
     return (
       <main className="left-aligned">
-        <Toaster position="bottom-right" />
         <div className="header cart-header">Cart</div>
         <div className="cart-container">
           {items.length ? (
