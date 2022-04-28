@@ -40,3 +40,9 @@ export const removeFromCart = (itemId) => ({
   type: actionTypes.REMOVE_FROM_CART,
   payload: itemId,
 });
+
+// Show Toasts
+export const showToast = (message, type) => (dispatch) => {
+  dispatch({ type: actionTypes.SHOW_TOAST, payload: { message, type } });
+  setTimeout(() => dispatch({ type: actionTypes.EXPIRE_TOAST }), 3000);
+};

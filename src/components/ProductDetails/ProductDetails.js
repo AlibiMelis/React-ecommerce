@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addToCart } from "../../redux/actions";
+import { addToCart, showToast } from "../../redux/actions";
 import { getProduct } from "../../api/apollo";
 import { findProductPrice, priceToString } from "../../utils/price";
 import AttributeSelect from "../AttributeSelect/AttributeSelect";
-import { Loader, Purify } from "../shared";
+import { Loader, Metatags, Purify, Toast } from "../shared";
 import "./ProductDetails.css";
 
 const mapStateToProps = (state) => ({
   currency: state.currency.value,
 });
-const mapDispatchToProps = { addToCart };
+const mapDispatchToProps = { addToCart, showToast };
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -51,14 +51,14 @@ class ProductDetails extends Component {
     let allSelected = true;
     for (const attr of product.attributes) {
       if (!attributes[attr.id]) {
-        // toast.error(`Please, select ${attr.name}`);
+        this.props.showToast(`Please, select ${attr.name}`, "error");
         allSelected = false;
       }
     }
     if (!allSelected) return;
 
     this.props.addToCart(product, attributes);
-    // toast.success("Added to your cart");
+    this.props.showToast("Added to your cart", "success");
   };
 
   render() {
@@ -66,6 +66,8 @@ class ProductDetails extends Component {
     const { currency } = this.props;
     return (
       <main className="left-aligned">
+        <Metatags title="Product" />
+        <Toast />
         {!loading ? (
           product ? (
             <div className="product-container">

@@ -56,35 +56,22 @@ img {
 
 .toast-container {
   position: fixed;
+  top: var(--nav-height);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 98;
   margin: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border: 1px solid red;
 }
-.toast-container[data-position^="top-"] {
-  top: var(--nav-height);
-}
-.toast-container[data-position^="bottom-"] {
-  bottom: 0;
-}
-.toast-container[data-position$="-center"] {
-  left: 50%;
-  transform: translateX(-50%);
-}
-.toast-container[data-position$="-right"] {
-  right: 0;
-}
-.toast-container[data-position$="-left"] {
-  left: 0;
-}
+
 
 .toast {
   max-width: 300px;
   padding: .5rem 1rem;
   border-radius: 0.2rem;
-
+  background-color: white;
   animation: toast-load 300ms ease-in ;
 }
 .toast.success {

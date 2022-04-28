@@ -1,11 +1,12 @@
 
 import thunkMiddleware from "redux-thunk";
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { shop, currency, cart } from "./reducers";
+import { shop, currency, cart, toast } from "./reducers";
 
 let initialStore = {};
 try {
   initialStore = sessionStorage.getItem("myApp") ? JSON.parse(sessionStorage.getItem("myApp")) : {};
+  initialStore.toast.toasts = [];
 } catch (e) {
   console.log("Session storage error", e);
 }
@@ -16,7 +17,7 @@ const storeSaver = (store) => (next) => (action) => {
   return nextResult;
 };
 
-const rootReducer = combineReducers({ shop, currency, cart });
+const rootReducer = combineReducers({ shop, currency, cart, toast });
 
 export const store = createStore(
   rootReducer,

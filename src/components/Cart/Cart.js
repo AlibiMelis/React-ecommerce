@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { decrementItemCount, incrementItemCount, removeFromCart, setItemAttribute } from "../../redux/actions";
 import CartItem from "./CartItem";
 import "./Cart.css";
+import { Metatags } from "../shared";
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
@@ -30,6 +31,7 @@ class Cart extends Component {
 
     return (
       <main className="left-aligned">
+        <Metatags title="Shopping Cart" />
         <div className="header cart-header">Cart</div>
         <div className="cart-container">
           {items.length ? (

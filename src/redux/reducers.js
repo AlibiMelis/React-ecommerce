@@ -89,3 +89,16 @@ export const cart = (state = initialCartState, action = {}) => {
       return state;
   }
 };
+
+// TOAST REDUCER
+const initialToastState = { toasts: [] };
+export const toast = (state = initialToastState, action = {}) => {
+  switch (action.type) {
+    case actionTypes.SHOW_TOAST:
+      return { ...state, toasts: [action.payload, ...state.toasts] };
+    case actionTypes.EXPIRE_TOAST:
+      return { ...state, toasts: state.toasts.slice(0, state.toasts.length - 1) };
+    default:
+      return state;
+  }
+};

@@ -1,20 +1,20 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-const toast = {};
-toast.success = (message) => ({ type: "success", message });
-toast.error = (message) => ({ type: "error", message });
-export { toast };
+const mapStateToProps = (state) => ({ toasts: state.toast.toasts });
 class Toast extends Component {
   render() {
-    const { toasts, position } = this.props;
+    const { toasts } = this.props;
     return (
-      <div className="toast-container" data-position={position}>
+      <div className="toast-container">
         {toasts.map((t, ind) => (
-          <div className={"toast " + t.type ?? ""} key={ind}>{t.message}</div>
+          <div className={"toast " + (t.type || "")} key={ind}>
+            {t.message}
+          </div>
         ))}
       </div>
     );
   }
 }
 
-export default Toast;
+export default connect(mapStateToProps)(Toast);
