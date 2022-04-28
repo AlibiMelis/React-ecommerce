@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { decrementItemCount, incrementItemCount, removeFromCart, setItemAttribute } from "../../redux/actions";
+import { decrementItemCount, incrementItemCount, removeFromCart, setItemAttribute, showToast } from "../../redux/actions";
 import CartItem from "./CartItem";
+import { Metatags, Toast } from "../shared";
 import "./Cart.css";
-import { Metatags } from "../shared";
 
 const mapStateToProps = (state) => ({
   items: state.cart.items,
@@ -14,6 +14,7 @@ const mapDispatchToProps = {
   decrementItemCount,
   setItemAttribute,
   removeFromCart,
+  showToast
 };
 
 class Cart extends Component {
@@ -23,7 +24,7 @@ class Cart extends Component {
 
   removeItemFromCart = (itemId) => {
     this.props.removeFromCart(itemId);
-    // toast.success("Item is removed from your cart");
+    this.props.showToast("Item is removed from your cart", "success");
   };
 
   render() {
@@ -32,6 +33,7 @@ class Cart extends Component {
     return (
       <main className="left-aligned">
         <Metatags title="Shopping Cart" />
+        <Toast />
         <div className="header cart-header">Cart</div>
         <div className="cart-container">
           {items.length ? (

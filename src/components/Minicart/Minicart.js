@@ -1,7 +1,13 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { decrementItemCount, incrementItemCount, setItemAttribute, removeFromCart } from "../../redux/actions";
+import {
+  decrementItemCount,
+  incrementItemCount,
+  setItemAttribute,
+  removeFromCart,
+  showToast,
+} from "../../redux/actions";
 import { calculateProductsTotal } from "../../utils/price";
 import MinicartItem from "./MinicartItem";
 import { ReactComponent as CartIcon } from "../../assets/cart.svg";
@@ -16,6 +22,7 @@ const mapDispatchToProps = {
   decrementItemCount,
   setItemAttribute,
   removeFromCart,
+  showToast,
 };
 
 class Minicart extends Component {
@@ -54,7 +61,7 @@ class Minicart extends Component {
   };
   removeItemFromCart = (itemId) => {
     this.props.removeFromCart(itemId);
-    // toast.success("Item is removed from your cart");
+    this.props.showToast("Item is removed from your cart", "success");
   };
 
   render() {
@@ -72,8 +79,7 @@ class Minicart extends Component {
           <div className="minicart-bg">
             <div className="minicart" ref={this.minicartRef}>
               <div>
-                <span style={{ fontWeight: "bold" }}>My bag,</span>
-                {` ${items.length} items.`}
+                <span className="bold">My bag,</span> {` ${items.length} items.`}
               </div>
 
               <div className="items">

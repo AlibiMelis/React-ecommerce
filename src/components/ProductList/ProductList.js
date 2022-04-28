@@ -39,11 +39,9 @@ class ProductList extends Component {
         return acc;
       }, {});
       this.props.addToCart(product, attributes);
-
       this.props.showToast("Added to your cart", "success");
-
     } catch (e) {
-      this.props.showToast("Couldn't add this item", "error")
+      this.props.showToast("Couldn't add this item", "error");
     }
   };
 

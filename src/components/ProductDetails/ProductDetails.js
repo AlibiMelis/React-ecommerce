@@ -7,9 +7,7 @@ import AttributeSelect from "../AttributeSelect/AttributeSelect";
 import { Loader, Metatags, Purify, Toast } from "../shared";
 import "./ProductDetails.css";
 
-const mapStateToProps = (state) => ({
-  currency: state.currency.value,
-});
+const mapStateToProps = (state) => ({ currency: state.currency.value });
 const mapDispatchToProps = { addToCart, showToast };
 
 class ProductDetails extends Component {

@@ -59,7 +59,7 @@ img {
   top: var(--nav-height);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 98;
+  z-index: 999;
   margin: 1rem;
   display: flex;
   flex-direction: column;
@@ -105,6 +105,9 @@ img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.bold {
+  font-weight: bold;
 }
 
 @keyframes loader-spin {
