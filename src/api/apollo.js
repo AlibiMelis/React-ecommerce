@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ProductListQuery, ProductDetailsQuery, CategoryListQuery, CurrencyListQuery } from "./apolloQueries";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
+  uri: "https://ecommerce-api-5u3i.onrender.com",
   cache: new InMemoryCache(),
 });
 
